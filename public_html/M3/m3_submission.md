@@ -84,7 +84,7 @@
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Comment briefly talking about what you learned and/or any difficulties you encountered and how you resolved them (or attempted to)</td></tr>
 <tr><td> <em>Response:</em> <p>I learned a lot about CSS selectors as this was a huge part<br>of this homework.<br></p><br></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Add a link to your pull request (hw branch to dev only)</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Rogger-Ortiz/IT202-002/pull/11">https://github.com/Rogger-Ortiz/IT202-002/pull/11</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Rogger-Ortiz/IT202-002/pull/13">https://github.com/Rogger-Ortiz/IT202-002/pull/11</a> </td></tr>
 <tr><td> <em>Sub-Task 3: </em> Add a link to your solution html file from prod (again you can assume the url at this point)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/M3/m3_submission.md">https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/M3/m3_submission.md</a> </td></tr>
 </table></td></tr>
