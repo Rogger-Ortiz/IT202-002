@@ -14,6 +14,10 @@ require(__DIR__ . "/../../partials/nav.php");
         <label for="confirm">Confirm</label>
         <input type="password" name="confirm" required minlength="8" />
     </div>
+    <div>
+        <label for="username">Username</label>
+        <input type="text" name="username" required maxlength="30" />
+    </div>
     <input type="submit" value="Register" />
 </form>
 <script>
@@ -29,6 +33,7 @@ require(__DIR__ . "/../../partials/nav.php");
 if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm"])) {
     $email = se($_POST, "email", "", false);
     $password = se($_POST, "password", "", false);
+    $username = se($_POST, "username", "", false);
     $confirm = se(
         $_POST,
         "confirm",
@@ -44,6 +49,13 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm
     //sanitize
     $email = sanitize_email($email);
     //validate
+    if(!preg_match('/^[a-z0-9_-]{3,30}$/', $username)) {
+        flash(
+            "Username must be lowercase, alphanumerical, and can only contain _ or -",
+            "warning"
+        );
+        $hasError = true;
+    }
     if (!is_valid_email($email)) {
         flash("Invalid email address");
         $hasError = true;
@@ -70,9 +82,9 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm
         //TODO 4
         $hash = password_hash($password, PASSWORD_BCRYPT);
         $db = getDB();
-        $stmt = $db->prepare("INSERT INTO Users (email, password) VALUES(:email, :password)");
+        $stmt = $db->prepare("INSERT INTO Users (email, password, username) VALUES(:email, :password, :username)");
         try {
-            $stmt->execute([":email" => $email, ":password" => $hash]);
+            $stmt->execute([":email" => $email, ":password" => $hash, ":username" => $username]);
             flash("Successfully registered!");
         } catch (Exception $e) {
             flash("There was a problem registering");
