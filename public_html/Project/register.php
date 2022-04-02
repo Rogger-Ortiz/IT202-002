@@ -1,15 +1,24 @@
 <?php
 require(__DIR__ . "/../../partials/nav.php");
 reset_session();
+
+if (isset($_POST["email"]) && isset($_POST["username"])){
+    $postemail = $_POST["email"];
+    $postusername = $_POST["username"];
+}else{
+    $postemail = "";
+    $postusername = "";
+}
+
 ?>
 <form onsubmit="return validate(this)" method="POST">
     <div>
         <label for="email">Email</label>
-        <input type="email" name="email" required />
+        <input type="email" name="email" value="<?php echo $postemail?>" required />
     </div>
     <div>
         <label for="username">Username</label>
-        <input type="text" name="username" required maxlength="30" />
+        <input type="text" name="username" value="<?php echo $postusername?>"  required maxlength="30" />
     </div>
     <div>
         <label for="pw">Password</label>
@@ -23,9 +32,8 @@ reset_session();
 </form>
 <script>
     function validate(form) {
-        //TODO 1: implement JavaScript validation
+        //TODO 1: implement JavaScript validation\
         //ensure it returns false for an error and true for success
-
         return true;
     }
 </script>
