@@ -1,8 +1,8 @@
 # Project Name: Simple Bank
-## Project Summary: Create a basic banking platform. This is the default project if nothing else is chosen.
-## Github Link: (Prod Branch of Project Folder)
-## Project Board Link: 
-## Website Link: (Heroku Prod of Project folder)
+## Project Summary: Create a basic banking platform.
+## Github Link: https://github.com/Rogger-Ortiz/IT202-002/tree/prod
+## Project Board Link: https://github.com/Rogger-Ortiz/IT202-002/projects/1
+## Website Link: https://dashboard.heroku.com/apps/ro77-prod
 ## Your Name: Rogger Ortiz
 
 <!-- Line item / Feature template (use this for each bullet point) -- DO NOT DELETE THIS SECTION
@@ -17,24 +17,44 @@
 ### Proposal Checklist and Evidence
 
 - Milestone 1
-  - [x] \(03/13/2022 of completion) User will be able to register a new account
-    -  Link to related .md file: [Link Name](link url)
-  - [x] \(03/13/2022 of completion) User will be able to login to their account (given correct credentials)
-    -  Link to related .md file: [Link Name](link url)
-  - [x] \(03/13/2022 of completion) User will be able to log out
-    -  Link to related .md file: [Link Name](link url)
-  - [ ] \(03/13/2022 of completion) Basic security rules implemented
-    -  Link to related .md file: [Link Name](link url)
-  - [ ] \(03/13/2022 of completion) Basic roles implemented
-    -  Link to related .md file: [Link Name](link url)
-  - [ ] \(03/13/2022 of completion) Site should have basic styles/theme applied; everything should be styled
-    -  Link to related .md file: [Link Name](link url)
-  - [ ] \(03/13/2022 of completion) Any output messages/errors should be "user friendly"
-    -  Link to related .md file: [Link Name](link url)
-  - [ ] \(03/13/2022 of completion) User will be able to see their profile
-    -  Link to related .md file: [Link Name](link url)
-  - [ ] \(03/13/2022 of completion) User will be able to edit their profile
-    -  Link to related .md file: [Link Name](link url)
+  - [x] \(02/21/2022 of completion) User will be able to register a new account
+    -  Link to related .md file: [Milestone1](https://github.com/Rogger-Ortiz/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+    -  Link to pull: [User Registration Pull](https://github.com/Rogger-Ortiz/IT202-002/pull/14)
+    -  Link to User Registration: [User Registration URL](https://ro77-prod.herokuapp.com/Project/register.php)
+
+  - [x] \(02/23/2022 of completion) User will be able to login to their account (given correct credentials)
+    -  Link to related .md file: [Milestone1](https://github.com/Rogger-Ortiz/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+    -  Link to pull: [User Login Pull](https://github.com/Rogger-Ortiz/IT202-002/pull/15)
+    -  Link to User Login: [User Login](https://ro77-prod.herokuapp.com/Project/login.php)
+
+  - [x] \(02/23/2022 of completion) User will be able to log out
+    -  Link to related .md file: [Milestone1](https://github.com/Rogger-Ortiz/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+    -  Link to pull: [User Logout Pull](https://github.com/Rogger-Ortiz/IT202-002/pull/15)
+    -  Link to User Logout: [User Logged Out](https://ro77-prod.herokuapp.com/Project/logout.php)
+
+  - [x] \(02/23/2022 of completion) Basic security rules implemented
+    -  Link to related .md file: [Milestone1](https://github.com/Rogger-Ortiz/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+    -  Link to security rules pull: [Helper Functions](https://github.com/Rogger-Ortiz/IT202-002/pull/16)
+
+  - [x] \(03/30/2022 of completion) Basic roles implemented
+    -  Link to related .md file: [Milestone1](https://github.com/Rogger-Ortiz/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+    -  Link to User Roles pull: [User Roles](https://github.com/Rogger-Ortiz/IT202-002/pull/32)
+
+  - [x] \(03/21/2022 of completion) Site should have basic styles/theme applied; everything should be styled
+    -  Link to related .md file: [Milestone1](https://github.com/Rogger-Ortiz/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+    -  Link to Housekeeping Changes CSS pull: [CSS Style Implement](https://github.com/Rogger-Ortiz/IT202-002/pull/20)
+
+  - [x] \(04/03/2022 of completion) Any output messages/errors should be "user friendly"
+    -  Link to related .md file: [Milestone1](https://github.com/Rogger-Ortiz/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+    -  Link to flash pull: [Flash Messages](https://github.com/Rogger-Ortiz/IT202-002/pull/17)
+
+  - [x] \(03/21/2022 of completion) User will be able to see their profile
+    -  Link to related .md file: [Milestone1](https://github.com/Rogger-Ortiz/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+    -  Link to Profile file: [Profile PHP](https://github.com/Rogger-Ortiz/IT202-002/pull/20)
+
+  - [x] \(03/31/2022 of completion) User will be able to edit their profile
+    -  Link to related .md file: [Milestone1](https://github.com/Rogger-Ortiz/IT202-002/blob/Milestone1/public_html/Project/milestone1.md)
+    -  Link to Profile.php: [Profile URL](https://ro77-prod.herokuapp.com/Project/profile.php)
 
 
 - Milestone 2
