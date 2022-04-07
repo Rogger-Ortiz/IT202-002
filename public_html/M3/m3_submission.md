@@ -1,3 +1,6 @@
+<<<<<<< HEAD
+M6-HTML5-Canvas
+=======
 <table><tr><td> <em>Assignment: </em> JavaScript & CSS Challenge</td></tr>
 <tr><td> <em>Student: </em> Rogger Ortiz(ro77)</td></tr>
 <tr><td> <em>Generated: </em> 2/15/2022 10:00:13 PM</td></tr>
@@ -84,8 +87,9 @@
 <tr><td><table><tr><td> <em>Sub-Task 1: </em> Comment briefly talking about what you learned and/or any difficulties you encountered and how you resolved them (or attempted to)</td></tr>
 <tr><td> <em>Response:</em> <p>I learned a lot about CSS selectors as this was a huge part<br>of this homework.<br></p><br></td></tr>
 <tr><td> <em>Sub-Task 2: </em> Add a link to your pull request (hw branch to dev only)</td></tr>
-<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Rogger-Ortiz/IT202-002/pull/11">https://github.com/Rogger-Ortiz/IT202-002/pull/11</a> </td></tr>
+<tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Rogger-Ortiz/IT202-002/pull/13">https://github.com/Rogger-Ortiz/IT202-002/pull/11</a> </td></tr>
 <tr><td> <em>Sub-Task 3: </em> Add a link to your solution html file from prod (again you can assume the url at this point)</td></tr>
 <tr><td> <a rel="noreferrer noopener" target="_blank" href="https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/M3/m3_submission.md">https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/M3/m3_submission.md</a> </td></tr>
 </table></td></tr>
 <table><tr><td><em>Grading Link: </em><a rel="noreferrer noopener" href="https://learn.ethereallab.app/homework/IT202-002-S22/javascript-csschallenge/grade/ro77" target="_blank">Grading</a></td></tr></table>
+>>>>>>> 3c11351cc0b2b47c891dbbba528b1d45ad2c876f
