@@ -31,6 +31,11 @@ session_start();
     <ul>
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
+            <li><a href="#">Open Account</a></li>
+            <li><a href="#">My Accounts</a></li>
+            <li><a href="#">Deposit</a></li>
+            <li><a href="#">Withdraw</a></li>
+            <li><a href="#">Transfer</a></li>
             <li><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
         <?php endif; ?>
         <?php if (!is_logged_in()) : ?>
