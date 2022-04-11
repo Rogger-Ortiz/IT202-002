@@ -8,4 +8,3 @@ function generateRandomString($length) {
     }
     return $randomString;
 }
-?>
