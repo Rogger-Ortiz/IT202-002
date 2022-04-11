@@ -58,7 +58,23 @@
 
 
 - Milestone 2
-  - (duplicate template here for Milestone 1 features)
+  - [ ] \(mm/dd/yyyy of completion) Create the Accounts Table (from the proposal bullet point, if it's a sub-point indent it properly)
+  -  Link to related .md file: [Link Name](link url)
+  - [ ] \(mm/dd/yyyy of completion) Project Setup Steps (from the proposal bullet point, if it's a sub-point indent it properly)
+  -  Link to related .md file: [Link Name](link url)
+  - [ ] \(mm/dd/yyyy of completion) Create the Transactions Table (from the proposal bullet point, if it's a sub-point indent it properly)
+  -  Link to related .md file: [Link Name](link url)
+  - [ ] \(mm/dd/yyyy of completion) Dashboard Page (from the proposal bullet point, if it's a sub-point indent it properly)
+  -  Link to related .md file: [Link Name](link url)
+  - [ ] \(mm/dd/yyyy of completion) User will be able to create a Checking Account (from the proposal bullet point, if it's a sub-point indent it properly)
+  -  Link to related .md file: [Link Name](link url)
+  - [ ] \(mm/dd/yyyy of completion) User will be able to list their accounts (from the proposal bullet point, if it's a sub-point indent it properly)
+  -  Link to related .md file: [Link Name](link url)
+  - [ ] \(mm/dd/yyyy of completion) User will be able to click an account for more information (from the proposal bullet point, if it's a sub-point indent it properly)
+  -  Link to related .md file: [Link Name](link url)
+  - [ ] \(mm/dd/yyyy of completion) User will be able to deposit/withdraw from their accounts (from the proposal bullet point, if it's a sub-point indent it properly)
+  -  Link to related .md file: [Link Name](link url)
+  
 - Milestone 3
   - (duplicate template here for Milestone 1 features)
 - Milestone 4
