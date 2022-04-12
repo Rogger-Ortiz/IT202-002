@@ -33,8 +33,8 @@ session_start();
             <li><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
             <li><a href="<?php echo get_url('createaccount.php'); ?>">Open Account</a></li>
             <li><a href="<?php echo get_url('accounts.php'); ?>">My Accounts</a></li>
-            <li><a href="#">Deposit</a></li>
-            <li><a href="#">Withdraw</a></li>
+            <li><a href="<?php echo get_url('deposit.php'); ?>">Deposit</a></li>
+            <li><a href="<?php echo get_url('withdraw.php'); ?>">Withdraw</a></li>
             <li><a href="#">Transfer</a></li>
             <li><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
         <?php endif; ?>
