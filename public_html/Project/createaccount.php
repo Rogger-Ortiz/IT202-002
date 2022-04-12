@@ -89,8 +89,8 @@ if(isset($_POST["account"]) && !$hasError){
         $stmt = $db->prepare("INSERT INTO Accounts(account_number, user_id, balance, account_type) VALUES($accnum, $uid, $bal, 'Savings')");
     }
 
-    $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($worldacc, $accnum, $bal, 'Deposit', 'Account Creation', $bal )");
-    $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accnum, $worldacc, ($bal*-1), 'Deposit', 'Account Creation', $wbal)");
+    $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($worldacc, $accnum, $bal, 'Deposit', 'Account Creation', $wbal )");
+    $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accnum, $worldacc, ($bal*-1), 'Deposit', 'Account Creation', $bal)");
 
     try {
         $stmt->execute();
