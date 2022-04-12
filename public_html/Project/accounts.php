@@ -19,8 +19,6 @@ if (is_logged_in(true)) {
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
      $results = $l;
- }else{
-     flash("No accounts found", "warning");
  }
 ?>
 
@@ -34,12 +32,12 @@ if (is_logged_in(true)) {
     <tbody>
         <?php if (empty($results)) : ?>
             <tr>
-                <td colspan="100%">No roles</td>
+                <td colspan="100%">No Accounts</td>
             </tr>
         <?php else : ?>
             <?php foreach ($results as $item) : ?>
                 <tr>
-                    <td><?php se($item, "account_number"); ?></td>
+                    <td><a href="<?php echo get_url('transactions.php'); ?>?account=<?php se($item, "account_number");?>"><?php se($item, "account_number"); ?></a></td>
                     <td><?php se($item, "account_type"); ?></td>
                     <td><?php se($item, "modified"); ?></td>
                     <td><?php se($item, "balance"); ?></td>
