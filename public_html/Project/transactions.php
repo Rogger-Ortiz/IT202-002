@@ -14,7 +14,7 @@ if (is_logged_in(true)) {
 ?>
 
 <?php
-$stmt = $db->prepare("SELECT account_number, account_type, balance, created FROM Accounts WHERE account_number=$accnum LIMIT 1");
+$stmt = $db->prepare("SELECT id, account_number, account_type, balance, created FROM Accounts WHERE id=$accnum LIMIT 1");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -41,10 +41,11 @@ $stmt = $db->prepare("SELECT account_number, account_type, balance, created FROM
     </tbody>
 </table>
 <br>
+
 <?php
  $results = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT account_src, account_dest, transaction_type, balance_change, created, expected_total, memo FROM Transactions WHERE account_src=$accnum OR account_dest=$accnum ORDER BY created desc LIMIT 10");
+ $stmt = $db->prepare("SELECT account_src, account_dest, transaction_type, balance_change, created, expected_total, memo FROM Transactions WHERE account_src=$accnum ORDER BY created desc LIMIT 10");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -67,13 +68,13 @@ $stmt = $db->prepare("SELECT account_number, account_type, balance, created FROM
     <tbody>
         <?php if (empty($results)) : ?>
             <tr>
-                <td colspan="100%">No roles</td>
+                <td colspan="100%">No Transactions</td>
             </tr>
         <?php else : ?>
             <?php foreach ($results as $item) : ?>
                 <tr>
-                    <td><?php se($item, "account_src"); ?></td>
-                    <td><?php se($item, "account_dest"); ?></td>
+                    <td><?php echo toaccnum($item["account_src"]); ?></td>
+                    <td><?php echo toaccnum($item["account_dest"]); ?></td>
                     <td><?php se($item, "transaction_type"); ?></td>
                     <td><?php se($item, "balance_change"); ?></td>
                     <td><?php se($item, "created"); ?></td>

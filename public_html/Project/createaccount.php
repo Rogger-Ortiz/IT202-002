@@ -27,12 +27,20 @@ if (is_logged_in(true)) {
 
 <?php
 $hasError = false;
+
+if(!(isset($_POST['account']))){
+    if(isset($_POST['deposit'])){
+        flash("Please select an account to create", "warning");
+    }
+}
+
 if(isset($_POST["deposit"])){
     if($_POST["deposit"]<5){
-        flash("Deposit must be $5 or more.", "danger");
+        flash("Deposit must be $5 or more.", "warning");
         $hasError = true;
     }
 }
+
 if(isset($_POST["account"]) && !$hasError){
     $db = getDB();
 
@@ -60,7 +68,7 @@ if(isset($_POST["account"]) && !$hasError){
     $uid = get_user_id();
     $bal = $_POST["deposit"];
     $acc = $_POST["account"];
-    $worldacc = -1;
+    $worldacc = 1;
 
     $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$bal) WHERE user_id=-1");
     $balstmt->execute();
@@ -88,12 +96,28 @@ if(isset($_POST["account"]) && !$hasError){
     if($acc == 1){
         $stmt = $db->prepare("INSERT INTO Accounts(account_number, user_id, balance, account_type) VALUES($accnum, $uid, $bal, 'Savings')");
     }
+    
+    $stmt->execute();
 
-    $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($worldacc, $accnum, ($bal*-1), 'Deposit', 'Account Creation', $wbal )");
-    $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accnum, $worldacc, $bal, 'Deposit', 'Account Creation', $bal)");
-
+    $results = [];
+    $stmt = $db->prepare("SELECT id FROM Accounts WHERE user_id=$uid LIMIT 1");
     try {
         $stmt->execute();
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $results = $r;
+        }
+    } catch (PDOException $e) {
+        error_log(var_export($e, true));
+        flash("Error fetching items", "danger");
+    }
+    $uAccID = $results[0]['id'];
+    $uAccID = (int)$uAccID;
+
+    $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($worldacc, $uAccID, ($bal*-1), 'Deposit', 'Account Creation', $wbal )");
+    $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($uAccID, $worldacc, $bal, 'Deposit', 'Account Creation', $bal)");
+
+    try {
         $stmt2->execute();
         $stmt3->execute();
 
