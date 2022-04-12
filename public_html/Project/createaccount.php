@@ -16,7 +16,7 @@ if (is_logged_in(true)) {
         <input type="radio" id="check" name="account" value=0>
         <label for="check">Checking</label><br>
 
-        <!-- <input type="radio" id="Savings" name="account" value="Savings">
+        <!-- <input type="radio" id="Savings" name="account" value=1>
          <label for="save">Savings</label><br> Use Later-->
     
         <input type="number" id="deposit" name="deposit" value="Initial Deposit">
@@ -82,10 +82,10 @@ if(isset($_POST["account"]) && !$hasError){
     $wbal = $results[0]['balance'];
     $wbal = strval($wbal);
 
-    if($acc = 0){
+    if($acc == 0){
         $stmt = $db->prepare("INSERT INTO Accounts(account_number, user_id, balance, account_type) VALUES($accnum, $uid, $bal, 'Checking')");
     }
-    if($acc = 1){
+    if($acc == 1){
         $stmt = $db->prepare("INSERT INTO Accounts(account_number, user_id, balance, account_type) VALUES($accnum, $uid, $bal, 'Savings')");
     }
 
