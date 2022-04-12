@@ -39,6 +39,9 @@ $db = getDB();
 <label for="deposit">Deposit Amount:</label>
 <input type="number" id="deposit" name="deposit"><br>
 
+<label for="memo">Memo:</label>
+<input type="text" id="memo" name="memo"><br>
+
 <input type="submit" value="Submit" />
 </form>
 
@@ -63,6 +66,8 @@ if(isset($_POST['account'])){
 if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
  // Transactions(account_src, account_dest, balance_change, transaction_type, expected_total)
  $worldacc = 1;
+ $memo = $_POST['memo'];
+ $memo = strval($memo);
  $results = [];
  $stmt = $db->prepare("SELECT id FROM Accounts WHERE user_id=$uid LIMIT 1");
  try {
@@ -128,8 +133,8 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $Ubal = strval($Ubal);
 
  // Insert Transactions into Transactions table
- $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total) VALUES($accountsrc, $accountdest, $balchange, 'Deposit', $wbal )");
- $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total) VALUES($Uaccountsrc, $Uaccountdest, $Ubalchange, 'Deposit', $Ubal)");
+ $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, $balchange, 'Deposit', $wbal, '$memo')");
+ $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, $Ubalchange, 'Deposit', $Ubal, '$memo')");
 
  // Execute statements, flash success
  try {
