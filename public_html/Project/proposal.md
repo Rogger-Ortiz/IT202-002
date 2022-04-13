@@ -58,38 +58,38 @@
 
 
 - Milestone 2
-  - [ ] \(04/07/2022 of completion) Create the Accounts Table
+  - [x] \(04/07/2022 of completion) Create the Accounts Table
     -  Link to related .md file: [Milestone2](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone2.md)
     -  Link to related pull: [Accounts Table](https://github.com/Rogger-Ortiz/IT202-002/pull/50)
 
-  - [ ] \(04/07/2022 of completion) Project Setup Steps
+  - [x] \(04/07/2022 of completion) Project Setup Steps
     -  Link to related .md file: [Milestone2](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone2.md)
     -  Link to related pull: [Project Setup](https://github.com/Rogger-Ortiz/IT202-002/pull/51)
 
-  - [ ] \(04/07/2022 of completion) Create the Transactions Table
+  - [x] \(04/07/2022 of completion) Create the Transactions Table
     -  Link to related .md file: [Milestone2](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone2.md)
     -  Link to related pull: [Transactions Table](https://github.com/Rogger-Ortiz/IT202-002/pull/52)
 
-  - [ ] \(04/09/2022 of completion) Dashboard Page
+  - [x] \(04/09/2022 of completion) Dashboard Page
     -  Link to related .md file: [Milestone2](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone2.md)
     -  Link to related pull: [Nav Update](https://github.com/Rogger-Ortiz/IT202-002/pull/53)
     -  Link to related feature: [Dashboard](https://ro77-prod.herokuapp.com/Project/home.php)
 
-  - [ ] \(04/11/2022 of completion) User will be able to create a Checking Account
+  - [x] \(04/11/2022 of completion) User will be able to create a Checking Account
     -  Link to related .md file: [Milestone2](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone2.md)
     -  Link to related pull: [Create Account](https://github.com/Rogger-Ortiz/IT202-002/pull/56)
     -  Link to related feature: [Create Link](https://ro77-prod.herokuapp.com/Project/createaccount.php)
 
-  - [ ] \(04/11/2022 of completion) User will be able to list their accounts
+  - [x] \(04/11/2022 of completion) User will be able to list their accounts
     -  Link to related .md file: [Milestone2](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone2.md)
     -  Link to related pull: [List Accounts](https://github.com/Rogger-Ortiz/IT202-002/pull/57)
     -  Link to related feature: [Link to List](https://ro77-prod.herokuapp.com/Project/accounts.php)
 
-  - [ ] \(04/11/2022 of completion) User will be able to click an account for more information
+  - [x] \(04/11/2022 of completion) User will be able to click an account for more information
     -  Link to related .md file: [Milestone2](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone2.md)
     -  Link to related pull: [Transactions Page](https://github.com/Rogger-Ortiz/IT202-002/pull/58)
 
-  - [ ] \(04/12/2022 of completion) User will be able to deposit/withdraw from their accounts
+  - [x] \(04/12/2022 of completion) User will be able to deposit/withdraw from their accounts
     -  Link to related .md file: [Milestone2](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone2.md)
     -  Link to related pull: [Deposit/Withdraw](https://github.com/Rogger-Ortiz/IT202-002/pull/59)
     -  Link to related feature: [Deposit](https://ro77-prod.herokuapp.com/Project/deposit.php)
