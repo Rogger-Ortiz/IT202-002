@@ -13,10 +13,10 @@ if (is_logged_in(true)) {
 <form onsubmit="return validate(this)" method="POST">
     <p>Please select your desired account type for creation:</p>
         
-        <input type="radio" id="check" name="account" value=0>
+        <input type="radio" id="check" name="account" value="Checking">
         <label for="check">Checking</label><br>
 
-        <!-- <input type="radio" id="Savings" name="account" value=1>
+        <!-- <input type="radio" id="Savings" name="account" value="Savings">
          <label for="save">Savings</label><br> Use Later-->
     
         <input type="number" id="deposit" name="deposit" value="Initial Deposit">
@@ -90,17 +90,11 @@ if(isset($_POST["account"]) && !$hasError){
     $wbal = $results[0]['balance'];
     $wbal = strval($wbal);
 
-    if($acc == 0){
-        $stmt = $db->prepare("INSERT INTO Accounts(account_number, user_id, balance, account_type) VALUES($accnum, $uid, $bal, 'Checking')");
-    }
-    if($acc == 1){
-        $stmt = $db->prepare("INSERT INTO Accounts(account_number, user_id, balance, account_type) VALUES($accnum, $uid, $bal, 'Savings')");
-    }
-    
+    $stmt = $db->prepare("INSERT INTO Accounts(account_number, user_id, balance, account_type) VALUES($accnum, $uid, $bal, '$acc')");
     $stmt->execute();
 
     $results = [];
-    $stmt = $db->prepare("SELECT id FROM Accounts WHERE user_id=$uid LIMIT 1");
+    $stmt = $db->prepare("SELECT id FROM Accounts WHERE account_number=$accnum LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
