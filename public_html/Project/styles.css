@@ -13,31 +13,28 @@
 .alert-info {
     background-color: rgb(244,242,201);
 }
-nav li{display: inline; background-color: rgb(213, 173, 54);}
-nav li a{color: rgb(244, 242, 201)}
-input{border-radius: 50%;}
+
+nav li{
+    display: inline; background-color: rgb(213, 173, 54);
+}
+
+nav li a{
+    color: rgb(244, 242, 201)
+}
+
 body{
     background-color: rgb(38,89,153);
     color: rgb(68, 136, 191);
-
 }
 table {
-
     font-family: arial, sans-serif;
-  
     border-collapse: collapse;
-  
     width: 100%;
-  
   }
   
   
   td, th {
-  
     border: 1px solid #dddddd;
-  
     text-align: left;
-  
     padding: 8px;
-  
   }
