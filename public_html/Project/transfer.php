@@ -46,8 +46,8 @@ $results = [];
     ?>
 </select>
 <br>
-<label for="withdraw">Withdraw Amount:</label>
-<input type="number" id="withdraw" name="withdraw"><br>
+<label for="transfer">Transfer Amount:</label>
+<input type="number" id="transfer" name="transfer"><br>
 
 <label for="memo">Memo:</label>
 <input type="text" id="memo" name="memo"><br>
@@ -57,6 +57,7 @@ $results = [];
 
 <?php
 $hasError = false;
+
 if(isset($_POST['account']) && isset($_POST['account2'])){
     if($_POST['account'] == "Account" || $_POST['account2'] == "Account"){
         flash("Please choose 2 valid accounts", "warning");
@@ -70,11 +71,55 @@ if(isset($_POST['account']) && isset($_POST['account2'])){
         $hasError = true;
     }
 }
+
+
+$limval = false;
+$limit = 0;
+if(isset($_POST['account']) && ($_POST['account'] != "Account")){
+    $accnum = $_POST['account'];
+    $results = [];
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$accnum LIMIT 1");
+    try {
+        $stmt->execute();
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $results = $r;
+        }
+    } catch (PDOException $e) {
+        error_log(var_export($e, true));
+        flash("Error fetching items", "danger");
+    }
+    if($results){
+        $limit = $results[0]['balance'];
+        $limit = (int)$limit;
+        $limval = true;
+    }
+}
+
+
+if(isset($_POST['transfer']) && $limval){
+    if($_POST['transfer'] > $limit){
+        flash("Cannot transfer more than account has.", "warning");
+    }
+}
+
 if((isset($_POST['account']) && isset($_POST['account2'])) && !($hasError)){
+  $db = getDB();
+
   $accsrc = $_POST['account'];
   $accdest = $_POST['account2'];
+  $transamt = $_POST['transfer'];
+  $memo = $_POST['memo'];
 
-    
+  $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$transamt) WHERE account_number=$accdest");
+  $balstmt->execute();
+  $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$transamt) WHERE account_number=$accsrc");
+  $balstmt->execute();
+  
+  $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accsrc, $accdest, ($transamt*-1), 'Transfer', 0)");
+  $trstmt->execute();
+  $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accsrc, $accdest, $transamt, 'Transfer', 0)");
+  $trstmt->execute();  
 }
 ?>
 
