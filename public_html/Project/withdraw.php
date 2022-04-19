@@ -162,7 +162,7 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $wbal = $results[0]['balance'];
     $wbal = strval($wbal);
 
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid LIMIT 1");
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$useracc LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -178,7 +178,7 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $Ubal = strval($Ubal);
 
  // Insert Transactions into Transactions table
- $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, ($balchange*-1), 'This one', $wbal, '$memo')");
+ $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, ($balchange*-1), 'Withdraw', $wbal, '$memo')");
  $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, $balchange, 'Withdraw', $Ubal, '$memo')");
 
  // Execute statements, flash success
