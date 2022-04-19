@@ -65,11 +65,12 @@ if(isset($_POST['account'])){
 
 if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
  // Transactions(account_src, account_dest, balance_change, transaction_type, expected_total)
+ $useracc = $_POST['account'];
  $worldacc = 1;
  $memo = $_POST['memo'];
  $memo = strval($memo);
  $results = [];
- $stmt = $db->prepare("SELECT id FROM Accounts WHERE user_id=$uid LIMIT 1");
+ $stmt = $db->prepare("SELECT id FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
  try {
      $stmt->execute();
      $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -91,14 +92,13 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
  // User Insert Stats
  $Uaccountsrc = (int)$Uaccountsrc;
  $Uaccountdest = $worldacc;
- $Ubalchange = $_POST['deposit'];
  $Uexptotal;
  $uid = get_user_id();
 
  // Update Balances of both accounts
  $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$balchange) WHERE user_id=-1");
  $balstmt->execute();
- $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$Ubalchange) WHERE user_id=$uid");
+ $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$balchange) WHERE user_id=$uid AND account_number=$useracc");
  $balstmt->execute();
 
  // Grab both accounts expected totals for insertion
@@ -117,7 +117,7 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $wbal = $results[0]['balance'];
     $wbal = strval($wbal);
 
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid LIMIT 1");
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -133,8 +133,8 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $Ubal = strval($Ubal);
 
  // Insert Transactions into Transactions table
- $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, $balchange, 'Deposit', $wbal, '$memo')");
- $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, $Ubalchange, 'Deposit', $Ubal, '$memo')");
+ $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, ($balchange*-1), 'Deposit', $wbal, '$memo')");
+ $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, $balchange, 'Deposit', $Ubal, '$memo')");
 
  // Execute statements, flash success
  try {
