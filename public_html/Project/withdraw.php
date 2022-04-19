@@ -137,14 +137,13 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
  $Uaccountsrc = $results[0]['id'];
  $Uaccountsrc = (int)$Uaccountsrc;
  $Uaccountdest = $worldacc;
- $Ubalchange = $_POST['withdraw'];
  $Uexptotal;
  $uid = get_user_id();
 
  // Update Balances of both accounts
  $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$balchange) WHERE user_id=-1");
  $balstmt->execute();
- $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$Ubalchange) WHERE user_id=$uid AND account_number=$useracc");
+ $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$balchange) WHERE user_id=$uid AND account_number=$useracc");
  $balstmt->execute();
 
  // Grab both accounts expected totals for insertion
@@ -179,8 +178,8 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $Ubal = strval($Ubal);
 
  // Insert Transactions into Transactions table
- $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, $balchange, 'Withdraw', $wbal, '$memo')");
- $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, $Ubalchange, 'Withdraw', $Ubal, '$memo')");
+ $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, ($balchange*-1), 'This one', $wbal, '$memo')");
+ $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, $balchange, 'Withdraw', $Ubal, '$memo')");
 
  // Execute statements, flash success
  try {
