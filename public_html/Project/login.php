@@ -23,6 +23,9 @@ require(__DIR__ . "/../../partials/nav.php");
     }
 </script>
 <?php
+$db=getDB();
+$uid = get_user_id();
+
 //TODO 2: add PHP Code
 if (isset($_POST["email"]) && isset($_POST["password"])) {
     $email = se($_POST, "email", "", false);
@@ -89,7 +92,14 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
                         } else {
                             $_SESSION["user"]["roles"] = []; //no roles
                         }
-                        flash("Welcome, " . get_username());
+
+                        if(get_user_fname() == "" || get_user_lname() == ""){
+                            $name = "!";
+                        }else{
+                            $name = ", " . get_user_fname() . " " . get_user_lname() . "!";
+                        }
+
+                        flash("Welcome" . $name);
                         die(header("Location: home.php"));
                     } else {
                         flash("Invalid password");

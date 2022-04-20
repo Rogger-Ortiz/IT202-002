@@ -6,6 +6,8 @@ is_logged_in(true);
 if (isset($_POST["save"])) {
     $email = se($_POST, "email", null, false);
     $username = se($_POST, "username", null, false);
+    $fname = se($_POST, "fname", null, false);
+    $lname = se($_POST, "lname", null, false);
     $hasError = false;
     //sanitize
     $email = sanitize_email($email);
@@ -44,6 +46,19 @@ if (isset($_POST["save"])) {
             flash("An unexpected error occurred, please try again", "danger");
             //echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
         }
+    }
+    $uid = get_user_id();
+    if(ctype_alpha($fname) && ctype_alpha($lname)){
+        $stmt = $db->prepare("UPDATE Users set first_name='$fname' where id=$uid");
+        $stmt2 = $db->prepare("UPDATE Users set last_name='$lname' where id=$uid");
+        try{
+            $stmt->execute();
+            $stmt2->execute();
+        } catch (Exception $e) {
+            echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+        } 
+    }else{
+        flash("Please only enter alphabetical characters in name fields", "warning");
     }
 
 
@@ -94,6 +109,7 @@ $email = get_user_email();
 $username = get_username();
 ?>
 <form method="POST" onsubmit="return validate(this);">
+    <div>Account Details:</div>
     <div class="mb-3">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" value="<?php se($email); ?>" />
@@ -101,7 +117,17 @@ $username = get_username();
     <div class="mb-3">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" value="<?php se($username); ?>" />
+    </div><br>
+
+    <div>Change Name</div>
+    <div class="mb-3">
+        <label for="fname">First Name</label>
+        <input type="text" name="fname" id="fname" value="<?php echo get_user_fname();?>"/>
     </div>
+    <div class="mb-3">
+        <label for="lname">Last Name</label>
+        <input type="text" name="lname" id="lname" value="<?php echo get_user_lname();?>"/>
+    </div><br>
     <!-- DO NOT PRELOAD PASSWORD -->
     <div>Password Reset</div>
     <div class="mb-3">
