@@ -25,7 +25,7 @@ if (isset($_POST["email"]) && isset($_POST["username"])){
         <input type="password" id="pw" name="password" required minlength="8" />
     </div>
     <div>
-        <label for="confirm">Confirm</label>
+        <label for="confirm">Confirm Password:</label>
         <input type="password" name="confirm" required minlength="8" />
     </div>
     <input type="submit" value="Register" />
