@@ -11,7 +11,7 @@ if (is_logged_in(true)) {
 ?>
 
 <form onsubmit="return validate(this)" method="POST">
-    <p>Please select your desired account type for creation:</p>
+    <h3>Please select your desired account type for creation:</h3>
         <label for="check">Checking</label>
         <input type="radio" id="check" name="account" value="Checking"><br>
 

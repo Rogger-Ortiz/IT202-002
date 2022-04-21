@@ -24,6 +24,7 @@ $results = [];
 ?>
 
 <form method="POST">
+    <h3>Transaction Details:</h3>
 <label for="account">Withdraw from Account Number:</label>
 <select id="account" name="account">
     <option value="Account">Account</option>
