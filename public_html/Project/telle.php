@@ -150,9 +150,7 @@ if(isset($_POST['submit']) && !$hasError){
     if($results){
         $accdest = $results[0]['account_number'];
         $accsrcID = toAccId($accsrc);
-        echo $accsrcID;
         $accdestID = toAccId($accdest);
-        echo $accdestID;
 
         $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$transamt) WHERE id=$accdestID");
         $balstmt->execute();
