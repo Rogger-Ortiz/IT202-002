@@ -102,6 +102,18 @@ if(isset($_POST['submit'])){
         $hasError = true;
     }
 
+    $space = strpos($_POST['fname'], ' ');
+    if($space != false){
+        flash("First name should only be one word", "warning");
+        $hasError = true;
+    }
+
+    $space = strpos($_POST['lname'], ' ');
+    if($space != false){
+        flash("Last name should only be one word", "warning");
+        $hasError = true;
+    }
+
     if($_POST['transfer']>$limit){
         flash("Cannot transfer more than account has.", "warning");
         $hasError = true;

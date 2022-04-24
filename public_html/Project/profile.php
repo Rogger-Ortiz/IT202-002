@@ -26,7 +26,7 @@ if (isset($_POST["save"])) {
         $stmt = $db->prepare("UPDATE Users set email = :email, username = :username where id = :id");
         try {
             $stmt->execute($params);
-            flash("Profile saved", "success");
+            flash("Account details saved", "success");
         } catch (Exception $e) {
             users_check_duplicate($e->errorInfo);
         }
@@ -54,11 +54,12 @@ if (isset($_POST["save"])) {
         try{
             $stmt->execute();
             $stmt2->execute();
+            echo "Name details saved";
         } catch (Exception $e) {
             echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
         } 
     }else{
-        flash("Please only enter alphabetical characters in name fields", "warning");
+        flash("Error with names: Please only enter alphabetical characters in name fields", "warning");
     }
 
 
