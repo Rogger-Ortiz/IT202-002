@@ -2,6 +2,7 @@
 require_once(__DIR__ . "/../../partials/nav.php");
 is_logged_in(true);
 ?>
+<h1>Profile</h1>
 <?php
 if (isset($_POST["save"])) {
     $email = se($_POST, "email", null, false);
@@ -110,7 +111,7 @@ $email = get_user_email();
 $username = get_username();
 ?>
 <form method="POST" onsubmit="return validate(this);">
-    <div>Account Details:</div>
+    <h3>Account Details:</h3>
     <div class="mb-3">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" value="<?php se($email); ?>" />
@@ -120,7 +121,7 @@ $username = get_username();
         <input type="text" name="username" id="username" value="<?php se($username); ?>" />
     </div><br>
 
-    <div>Change Name</div>
+    <h3>Change Name</h3>
     <div class="mb-3">
         <label for="fname">First Name</label>
         <input type="text" name="fname" id="fname" value="<?php echo get_user_fname();?>"/>
@@ -130,7 +131,7 @@ $username = get_username();
         <input type="text" name="lname" id="lname" value="<?php echo get_user_lname();?>"/>
     </div><br>
     <!-- DO NOT PRELOAD PASSWORD -->
-    <div>Password Reset</div>
+    <h3>Password Reset</h3>
     <div class="mb-3">
         <label for="cp">Current Password</label>
         <input type="password" name="currentPassword" id="cp" />
