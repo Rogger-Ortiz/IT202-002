@@ -2,10 +2,13 @@
 require_once(__DIR__ . "/../../partials/nav.php");
 is_logged_in(true);
 ?>
+<h1>Profile</h1>
 <?php
 if (isset($_POST["save"])) {
     $email = se($_POST, "email", null, false);
     $username = se($_POST, "username", null, false);
+    $fname = se($_POST, "fname", null, false);
+    $lname = se($_POST, "lname", null, false);
     $hasError = false;
     //sanitize
     $email = sanitize_email($email);
@@ -24,7 +27,7 @@ if (isset($_POST["save"])) {
         $stmt = $db->prepare("UPDATE Users set email = :email, username = :username where id = :id");
         try {
             $stmt->execute($params);
-            flash("Profile saved", "success");
+            flash("Account details saved", "success");
         } catch (Exception $e) {
             users_check_duplicate($e->errorInfo);
         }
@@ -44,6 +47,20 @@ if (isset($_POST["save"])) {
             flash("An unexpected error occurred, please try again", "danger");
             //echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
         }
+    }
+    $uid = get_user_id();
+    if(ctype_alpha($fname) && ctype_alpha($lname)){
+        $stmt = $db->prepare("UPDATE Users set first_name='$fname' where id=$uid");
+        $stmt2 = $db->prepare("UPDATE Users set last_name='$lname' where id=$uid");
+        try{
+            $stmt->execute();
+            $stmt2->execute();
+            echo "Name details saved";
+        } catch (Exception $e) {
+            echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+        } 
+    }else{
+        flash("Error with names: Please only enter alphabetical characters in name fields", "warning");
     }
 
 
@@ -94,6 +111,7 @@ $email = get_user_email();
 $username = get_username();
 ?>
 <form method="POST" onsubmit="return validate(this);">
+    <h3>Account Details:</h3>
     <div class="mb-3">
         <label for="email">Email</label>
         <input type="email" name="email" id="email" value="<?php se($email); ?>" />
@@ -101,9 +119,19 @@ $username = get_username();
     <div class="mb-3">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" value="<?php se($username); ?>" />
+    </div><br>
+
+    <h3>Change Name</h3>
+    <div class="mb-3">
+        <label for="fname">First Name</label>
+        <input type="text" name="fname" id="fname" value="<?php echo get_user_fname();?>"/>
     </div>
+    <div class="mb-3">
+        <label for="lname">Last Name</label>
+        <input type="text" name="lname" id="lname" value="<?php echo get_user_lname();?>"/>
+    </div><br>
     <!-- DO NOT PRELOAD PASSWORD -->
-    <div>Password Reset</div>
+    <h3>Password Reset</h3>
     <div class="mb-3">
         <label for="cp">Current Password</label>
         <input type="password" name="currentPassword" id="cp" />

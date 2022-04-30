@@ -36,6 +36,7 @@ session_start();
             <li><a href="<?php echo get_url('deposit.php'); ?>">Deposit</a></li>
             <li><a href="<?php echo get_url('withdraw.php'); ?>">Withdraw</a></li>
             <li><a href="<?php echo get_url('transfer.php'); ?>">Transfer</a></li>
+            <li><a href="<?php echo get_url('telle.php'); ?>">Send Money with Telle</a></li>
             <li><a href="<?php echo get_url('profile.php'); ?>">Profile</a></li>
         <?php endif; ?>
         <?php if (!is_logged_in()) : ?>

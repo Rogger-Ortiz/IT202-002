@@ -11,16 +11,15 @@ if (is_logged_in(true)) {
 ?>
 
 <form onsubmit="return validate(this)" method="POST">
-    <p>Please select your desired account type for creation:</p>
-        
-        <input type="radio" id="check" name="account" value="Checking">
-        <label for="check">Checking</label><br>
+    <h3>Please select your desired account type for creation:</h3>
+        <label for="check">Checking</label>
+        <input type="radio" id="check" name="account" value="Checking"><br>
 
-        <!-- <input type="radio" id="Savings" name="account" value="Savings">
-         <label for="save">Savings</label><br> Use Later-->
+        <!--label for="save">Savings</=label>
+        <input type="radio" id="Savings" name="account" value="Savings"><br><br>-->
     
-        <input type="number" id="deposit" name="deposit" value="Initial Deposit">
-        <label for="deposit">Deposit</label><br>
+        <label for="deposit">Deposit</label>
+        <input type="number" id="deposit" name="deposit" value="Initial Deposit"><br>
 
         <input type="submit" value="Create" />
 </form>
