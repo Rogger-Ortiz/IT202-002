@@ -24,6 +24,7 @@ $db = getDB();
 ?>
 
 <form method="POST">
+    <h3>Transaction Details:</h3>
 <label for="account">Deposit To Account Number:</label>
 <select id="account" name="account">
     <option value="Account">Account</option>

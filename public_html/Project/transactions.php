@@ -14,7 +14,8 @@ if (is_logged_in(true)) {
 ?>
 
 <?php
-$stmt = $db->prepare("SELECT id, account_number, account_type, balance, created FROM Accounts WHERE id=$accnum LIMIT 1");
+
+ $stmt = $db->prepare("SELECT id, account_number, account_type, balance, created FROM Accounts WHERE id=$accnum LIMIT 1");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -23,6 +24,40 @@ $stmt = $db->prepare("SELECT id, account_number, account_type, balance, created 
      flash("No accounts found", "warning");
  }
 ?>
+
+<?php
+if(isset($_POST['start']) && isset($_POST['end'])){
+    $startval = $_POST['start'];
+    $endval = $_POST['end'];
+    $typeval = $_POST['type'];
+}else{
+    $startval = "2022-01-01";
+    $endval = date("Y-m-d");
+    $typeval = "";
+}
+?>
+<form method="POST">
+    <label for="start">Between:</label>
+    <input type="date" id="start" name="start"
+       value=<?php echo $startval; ?>
+       min="2022-01-01" max=<?php date("Y-m-d");?>>
+
+    <label for="end">and</label>
+    <input type="date" id="end" name="end"
+       value=<?php echo $endval; ?>
+       min="2022-01-01" max=<?php date("Y-m-d"); ?>><br>
+
+    <label for="type">Transaction Type:</label>
+    <select id="type" name="type" value=<?php echo $typeval; ?>>
+        <option value="">All</option>
+        <option value="Deposit">Deposit</option>
+        <option value="Withdraw">Withdraw</option>
+        <option value="Transfer">Transfer</option>
+        <option value="Ext-Transfer">External Transfer</option>
+</select>
+
+    <input type="submit" value="Filter" />
+</form>
 
 <table>
     <thead>
@@ -45,13 +80,56 @@ $stmt = $db->prepare("SELECT id, account_number, account_type, balance, created 
 <?php
  $results = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT account_src, account_dest, transaction_type, balance_change, created, expected_total, memo FROM Transactions WHERE account_src=$accnum ORDER BY created desc LIMIT 10");
+ $query = "SELECT account_src, account_dest, transaction_type, balance_change, created, expected_total, memo FROM Transactions WHERE account_src=$accnum";
+ $countquery = "SELECT COUNT(*) FROM Transactions WHERE account_src=$accnum";
+ 
+
+ if(isset($_POST['start'])){
+     $sdate = $_POST['start'];
+     $sdate = $sdate . " 00:00:00";
+     $query = $query . " AND created>'$sdate'";
+     $countquery = $countquery . " AND created>'$sdate'";
+ }
+ if(isset($_POST['end'])){
+     $edate = $_POST['end'];
+     $edate = $edate . " 23:59:59";
+     $query = $query . " AND created<'$edate'";
+     $countquery = $countquery . " AND created<'$edate'";
+ }
+ if(isset($_POST['type']) && $_POST['type'] != ""){
+     $type = $_POST['type'];
+     $query = $query . "AND transaction_type='$type'";
+     $countquery = $countquery . " AND transaction_type='$type'";
+ }
+
+$pagelimit = 10;
+ 
+$countresults = [];
+$countstmt = $db->prepare($countquery);
+try {
+    $countstmt->execute();
+    $res = $countstmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($res) {
+        $countresults = $res;
+    }
+} catch (PDOException $e) {
+    error_log(var_export($e, true));
+    flash("Error fetching items", "danger");
+}
+$total = $countresults[0]['COUNT(*)'];
+$total = (int)$total;
+
+$totalpages = $total/$pagelimit;
+$curpage = $_GET['page'];
+
+ $offset = $pagelimit*($curpage-1);
+ $query = $query . " ORDER BY created desc LIMIT 10 OFFSET $offset";
+
+ $stmt = $db->prepare($query);
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
      $results = $l;
- }else{
-     flash("No accounts found", "warning");
  }
 ?>
 
@@ -85,3 +163,37 @@ $stmt = $db->prepare("SELECT id, account_number, account_type, balance, created 
         <?php endif; ?>
     </tbody>
 </table>
+
+<?php
+    $leftbound;
+    if($curpage==1){
+        $leftbound = "";
+    }else{
+        $leftbound = get_url('transactions.php') . "?account=" . $accnum . "&page=" . ($curpage-1);
+    }
+
+    $rightbound;
+    if($curpage==$totalpages){
+        $rightbound = "";
+    }else {
+        $rightbound = get_url('transactions.php') . "?account=" . $accnum . "&page=" . ($curpage+1);
+    }
+?>
+
+<nav>
+    <ul>
+        <li><a href=<?php echo $leftbound; ?>>Previous</a></li>
+        <?php
+            for($x = 0; $x<$totalpages; $x++):
+        ?>
+        <li><a href="<?php echo get_url('transactions.php'); ?>?account=<?php echo $accnum;?>&page=<?php echo ($x+1); ?>">Page <?php echo ($x+1); ?></a></li>
+        <?php
+            endfor;
+        ?>
+        <li><a href=<?php echo $rightbound; ?>>Next</a></li>
+    </ul>
+</nav>
+
+<?php
+require(__DIR__ . "/../../partials/flash.php");
+?>

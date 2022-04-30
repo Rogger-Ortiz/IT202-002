@@ -25,5 +25,7 @@ require(__DIR__ . "/get_url.php");
 
 require(__DIR__ . "/random_num.php");
 
-require(__DIR__ . "/toaccnum.php")
+require(__DIR__ . "/toaccnum.php");
+
+require(__DIR__ . "/toaccid.php")
 ?>

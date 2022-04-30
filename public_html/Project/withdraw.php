@@ -24,6 +24,7 @@ $results = [];
 ?>
 
 <form method="POST">
+    <h3>Transaction Details:</h3>
 <label for="account">Withdraw from Account Number:</label>
 <select id="account" name="account">
     <option value="Account">Account</option>
@@ -48,10 +49,10 @@ $results = [];
 
 <?php
 $hasError = false;
-if(isset($_POST['account'])){
+$limval = false;
+if(isset($_POST['account']) && $_POST['account'] != "Account"){
  $useracc = $_POST['account'];
  // Grab upper limit of account
-$limval = false;
 $results = [];
     $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
     try {

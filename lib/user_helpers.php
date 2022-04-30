@@ -46,3 +46,50 @@ function get_user_id()
     }
     return false;
 }
+function get_user_fname()
+{
+    if (is_logged_in()) { //we need to check for login first because "user" key may not exist
+        $db = getDB();
+        $uid = get_user_id();
+        $results = [];
+        $stmt = $db->prepare("SELECT id, first_name, last_name FROM Users WHERE id=$uid LIMIT 1");
+        try {
+            $stmt->execute();
+            $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($r) {
+                $results = $r;
+            }
+        } catch (PDOException $e) {
+            error_log(var_export($e, true));
+            flash("Error fetching items", "danger");
+        }
+        $fname = $results[0]['first_name'];
+
+        return strval($fname);
+    }
+    return false;
+}
+
+function get_user_lname()
+{
+    if (is_logged_in()) { //we need to check for login first because "user" key may not exist
+        $db = getDB();
+        $uid = get_user_id();
+        $results = [];
+        $stmt = $db->prepare("SELECT id, first_name, last_name FROM Users WHERE id=$uid LIMIT 1");
+        try {
+            $stmt->execute();
+            $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($r) {
+                $results = $r;
+            }
+        } catch (PDOException $e) {
+            error_log(var_export($e, true));
+            flash("Error fetching items", "danger");
+        }
+        $lname = $results[0]['last_name'];
+
+        return strval($lname);
+    }
+    return false;
+}
