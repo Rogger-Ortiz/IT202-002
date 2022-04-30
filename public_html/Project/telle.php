@@ -113,7 +113,7 @@ if(isset($_POST['submit'])){
     $acclength = strval($_POST['accdest']);
     $acclength = strlen($acclength);
     if($acclength != 4){
-        flash("Please only enter 4 digits for destination account.", "warning");
+        flash("Please only enter last 4 digits of destination account.", "warning");
         $hasError = true;
     }
 
