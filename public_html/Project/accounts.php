@@ -14,7 +14,7 @@ if (is_logged_in(true)) {
  $db = getDB();
  $results = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE user_id = $uid ORDER BY modified desc LIMIT 1");
+ $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE user_id = $uid ORDER BY modified desc LIMIT 10");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
