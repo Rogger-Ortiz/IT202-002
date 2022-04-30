@@ -56,7 +56,7 @@ $results = [];
 <label for="memo">Memo:</label>
 <input type="text" id="memo" name="memo"><br>
 
-<input type="submit" value="Submit" />
+<input type="submit" id=submit name=submit value="Submit" />
 </form>
 
 <?php
@@ -102,7 +102,7 @@ if(isset($_POST['account']) && ($_POST['account'] != "Account")){
 
 if(isset($_POST['submit'])){
     if($_POST['transfer'] <= 0){
-        flash("Transfer must be greater tha $0.", "warning");
+        flash("Transfer must be greater than $0.", "warning");
         $hasError = true;
     }
 }
