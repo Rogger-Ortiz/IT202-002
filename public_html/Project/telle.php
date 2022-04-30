@@ -39,9 +39,6 @@ $results = [];
 </select><br><br>
 
 <h3>Destination Information:</h3>
-<label for="fname">First Name:</label>
-<input type="text" id="fname" name="fname"><br>
-
 <label for="lname">Last Name:</label>
 <input type="text" id="lname" name="lname"><br>
 
@@ -92,19 +89,8 @@ if(isset($_POST['submit'])){
         $hasError = true;
     }
 
-    if($_POST['fname'] == ""){
-        flash("Please select recipients first name.", "warning");
-        $hasError = true;
-    }
-
     if($_POST['lname'] == ""){
         flash("Please select recipients last name.", "warning");
-        $hasError = true;
-    }
-
-    $space = strpos($_POST['fname'], ' ');
-    if($space != false){
-        flash("First name should only be one word", "warning");
         $hasError = true;
     }
 
@@ -138,18 +124,17 @@ if(isset($_POST['submit'])){
 if(isset($_POST['submit']) && !$hasError){
     $accsrc = $_POST['account'];
     $accdest = $_POST['accdest'];
-    $fname = $_POST['fname'];
     $lname = $_POST['lname'];
     $transamt = $_POST['transfer'];
     $memo = $_POST['memo'];
 
     //Verify User Exists
     $results = [];
-    $stmt = $db->prepare("SELECT Accounts.account_number, Users.first_name, Users.last_name
+    $stmt = $db->prepare("SELECT Accounts.account_number, Users.last_name
                           FROM Users
                           INNER JOIN Accounts 
                           ON Users.id = Accounts.user_id
-                          WHERE Accounts.account_number LIKE '%$accdest' AND Users.first_name='$fname' AND Users.last_name='$lname' LIMIT 1");
+                          WHERE Accounts.account_number LIKE '%$accdest' AND Users.last_name='$lname' LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
