@@ -100,13 +100,17 @@ if(isset($_POST['account']) && ($_POST['account'] != "Account")){
     }
 }
 
-if(isset($_POST['transfer']) <= 0){
-    flash("Transfer must be greater tha $0.", "warning");
+if(isset($_POST['submit'])){
+    if(isset($_POST['transfer']) <= 0){
+        flash("Transfer must be greater tha $0.", "warning");
+        $hasError = true;
+    }
 }
 
 if(isset($_POST['transfer']) && $limval){
     if($_POST['transfer'] > $limit){
         flash("Cannot transfer more than account has.", "warning");
+        $hasError = true;
     }
 }
 
