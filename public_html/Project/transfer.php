@@ -101,7 +101,7 @@ if(isset($_POST['account']) && ($_POST['account'] != "Account")){
 }
 
 if(isset($_POST['submit'])){
-    if(isset($_POST['transfer']) <= 0){
+    if($_POST['transfer'] <= 0){
         flash("Transfer must be greater tha $0.", "warning");
         $hasError = true;
     }
