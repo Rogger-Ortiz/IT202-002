@@ -96,7 +96,26 @@
     -  Link to related feature: [Withdraw](https://ro77-prod.herokuapp.com/Project/withdraw.php)
 
 - Milestone 3
-  - (duplicate template here for Milestone 1 features)
+  - [x] \(04/19/2022 of completion) User will be able to transfer between their accounts
+    -  Link to related .md file: [Milestone3](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone3.md)
+    -  Link to related pull: [Transfer Page Pull](https://github.com/Rogger-Ortiz/IT202-002/pull/83)
+    -  Link to related feature: [Transfer Page](https://ro77-prod.herokuapp.com/Project/transfer.php)
+
+  - [x] \(04/20/2022 of completion) Transaction History page
+    -  Link to related .md file: [Milestone3](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone3.md)
+    -  Link to related pull: [Transaction History Pull](https://github.com/Rogger-Ortiz/IT202-002/pull/84)
+    -  Link to related feature: [Transaction History Page (redirect from accounts page)](https://ro77-prod.herokuapp.com/Project/accounts.php)
+
+  - [x] \(04/20/2022 of completion) User's profile page should record/show First and Last name
+    -  Link to related .md file: [Milestone3](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone3.md)
+    -  Link to related pull: [Updated Profile Pull](https://github.com/Rogger-Ortiz/IT202-002/pull/85)
+    -  Link to related feature: [Profile Page](https://ro77-prod.herokuapp.com/Project/profile.php)
+
+  - [x] \(04/20/2022 of completion) User will be able to transfer funds to another user's account
+    -  Link to related .md file: [Milestone3](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone3.md)
+    -  Link to related pull: [Ext-Transfer Pull](https://github.com/Rogger-Ortiz/IT202-002/pull/86)
+    -  Link to related feature: [Ext-Transfer Page](https://ro77-prod.herokuapp.com/Project/telle.php)
+
 - Milestone 4
   - (duplicate template here for Milestone 1 features)
   - 
