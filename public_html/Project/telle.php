@@ -100,7 +100,7 @@ if(isset($_POST['submit'])){
         $hasError = true;
     }
 
-    if($_POST['transfer']>$limit){
+    if($_POST['transfer']>$limit && $_POST['account']!="Account"){
         flash("Cannot transfer more than account has.", "warning");
         $hasError = true;
     }
