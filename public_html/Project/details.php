@@ -97,7 +97,7 @@ if(isset($_POST['start']) && isset($_POST['end'])){
         $stmt = $db->prepare("UPDATE Accounts set is_active=$vis WHERE account_number=$visnum");
         try{
             $stmt->execute();
-            if($vis){
+            if($vis == "True"){
                 flash("Account opened!", "success");
             }else{
                 flash("Account closed!", "success");
