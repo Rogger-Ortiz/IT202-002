@@ -2,7 +2,7 @@
 require(__DIR__ . "/../../partials/nav.php");
 $_SESSION['account'] = $_GET['account'];
 ?>
-<h1>Transaction History</h1>
+<h1>Account Details</h1>
 
 <?php
 if (is_logged_in(true)) {
@@ -77,6 +77,40 @@ if(isset($_POST['start']) && isset($_POST['end'])){
 </table>
 <br>
 
+<?php if($results[0]["balance"] == 0): ?>
+    <form method="POST" onsubmit="return validate(this);">
+    <div class="mb-3">
+        <label for="public">Open</label>
+        <input type="radio" id="public" name="vis" value=True>
+        <label for="save">Closed</label>
+        <input type="radio" id="public" name="vis" value=False>
+    </div>
+    <input type="submit" value="Open/Close Account" name="save" />
+    </form>
+<?php endif; ?>
+
+<?php
+    if(isset($_POST['vis'])){
+    $vis = $_POST['vis'];
+    $visnum = $results[0]["account_number"];
+    if($vis){
+        $stmt = $db->prepare("UPDATE Accounts set is_active=$vis WHERE account_number=$visnum");
+        try{
+            $stmt->execute();
+            if($vis == "True"){
+                flash("Account opened!", "success");
+            }else{
+                flash("Account closed!", "success");
+            }
+        }catch (Exception $e) {
+            echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+        }
+    }
+}
+echo "<br>"
+?>
+
+<h3>Transaction History</h3>
 <?php
  $results = [];
  $uid = get_user_id();
