@@ -7,17 +7,41 @@ if (!has_role("Admin")) {
     die(header("Location: " . get_url("home.php")));
 }
 ?>
+<h1>List Accounts</h1>
+
+<h3>Filter:</h3>
+<form method="POST">
+    <label for="num">Account Number:</label>
+    <input type="number" id="number" name="num"><br>
+
+    <input type="submit" name="submit" value="Filter" />
+</form>
 
 <?php
  $db = getDB();
  $results = [];
- $uid = get_user_id();
- $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id != -1 ORDER BY modified desc LIMIT 10");
- $stmt->execute();
- $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
- if ($l) {
-     $results = $l;
+ $hasError = false;
+
+ $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id != -1";
+
+ if(isset($_POST['num'])){
+    $numval = $_POST['num'];
+    if(ctype_digit($numval)){
+        $query .= " AND account_number LIKE %$numval%";
+    }else{
+        flash("Please only use digits in account number", "warning");
+    }
  }
+
+ $query .= " ORDER BY modified desc LIMIT 10";
+ if(!$hasError){
+     $stmt->execute();
+     $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
+     if ($l) {
+        $results = $l;
+    }
+ }
+ 
 ?>
 
 <table>
