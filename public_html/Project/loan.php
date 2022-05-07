@@ -50,7 +50,7 @@ $results = [];
             </select>
 
 
-        <input type="submit" value="Submit" />
+        <input type="submit" id='submit' name='submit' value="Submit" />
 </form>
 
 <h1>Pay a Loan</h1>
@@ -102,7 +102,7 @@ if(isset($_POST["account"]) == "Account"){
 
 
 ###############################################################################################################################################
-if(!$hasError){
+if(isset($_POST['submit']) && !$hasError){
     $db = getDB();
 
     $dupe = [];
