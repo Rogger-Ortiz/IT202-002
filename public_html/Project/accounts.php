@@ -44,7 +44,7 @@ if (is_logged_in(true)) {
                     <td><?php se($item, "balance"); ?></td>
                     <td>
                         <?php
-                            $acc = se($item, "account_type");
+                            $acc = $item["account_type"];
                             $sys = [];
                             $stmt = $db->prepare("SELECT * FROM Sys");
                             $stmt->execute();
