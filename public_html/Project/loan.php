@@ -90,16 +90,17 @@ $results = [];
 <?php
 $hasError = false;
 
-if(isset($_POST["loan"]) && $_POST["loan"] < 500){
-    flash("Loan amount must be more than $500", "warning");
-    $hasError = true;
+if(isset($_POST['submit'])){
+    if(isset($_POST["loan"]) && $_POST["loan"] < 500){
+        flash("Loan amount must be more than $500", "warning");
+        $hasError = true;
+    }
+    
+    if(isset($_POST["account"]) == "Account"){
+        flash("Please select an account to deposit to", "warning");
+        $hasError = true;
+    }    
 }
-
-if(isset($_POST["account"]) == "Account"){
-    flash("Please select an account to deposit to", "warning");
-    $hasError = true;
-}
-
 
 ###############################################################################################################################################
 if(isset($_POST['submit']) && !$hasError){
@@ -289,12 +290,59 @@ if(isset($_POST["submit2"])){
     }
 
     if(!$hasError){
-        $payto = $_POST['to'];
-        $payfrom = $_POST['from'];
-        $toID = toAccId($payto);
-        $fromID = toAccId($payfrom);
+        $db = getDB();
 
+  $accsrc = $_POST['from'];
+  $accsrcID = toAccId($accsrc);
+  $accdest = $_POST['to'];
+  $accdestID = toAccId($accdest);
+  $transamt = $_POST['amount'];
+  $memo = "Loan Payment";
 
+  $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$transamt) WHERE account_number=$accdest");
+  $balstmt->execute();
+  $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$transamt) WHERE account_number=$accsrc");
+  $balstmt->execute();
+
+  $results = [];
+  $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$accsrc LIMIT 1");
+    try {
+        $stmt->execute();
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $results = $r;
+        }
+    } catch (PDOException $e) {
+        error_log(var_export($e, true));
+        flash("Error fetching items", "danger");
+    }
+  $sbal = $results[0]['balance'];
+  $sbal = (int)$sbal;
+
+  $results = [];
+  $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$accdest LIMIT 1");
+    try {
+        $stmt->execute();
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $results = $r;
+        }
+    } catch (PDOException $e) {
+        error_log(var_export($e, true));
+        flash("Error fetching items", "danger");
+    }
+  $dbal = $results[0]['balance'];
+  $dbal = (int)$dbal;
+  
+  try{
+    $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accsrcID, $accdestID, ($transamt*-1), 'Transfer', '$memo', $sbal)");
+    $trstmt->execute();
+    $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accdestID, $accsrcID, $transamt, 'Transfer', '$memo', $dbal)");
+    $trstmt->execute();
+    flash("Payment Success!", "Success");
+  }catch (PDOException $e) {
+    flash("Something went wrong.", "warning");
+  }  
     }
 
 }
