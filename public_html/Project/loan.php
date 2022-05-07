@@ -123,7 +123,7 @@ if(isset($_POST["loan"]) && !$hasError){
     $accnum = $myRandomString;
     $uid = get_user_id();
     $useracc = $_POST['account'];
-    $destID = toAccId($accnum);
+    $destID = toAccId($useracc);
     $bal = $_POST["loan"];
     $worldacc = 1;
 
