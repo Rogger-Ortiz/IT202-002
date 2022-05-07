@@ -23,12 +23,18 @@ if (!has_role("Admin")) {
     <input type="submit" value="Filter" />
 </form>
 
+<?php
+    $users = [];
+    $query = "SELECT id, email, created, username, first_name, last_name FROM Users";
+    $stmt = $db->prepare($query);
+    $stmt->execute();
+    $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($l) {
+        $results = $l;
+    }
+?>
 
 <h1>List Users</h1>
-<form method="POST">
-    <input type="search" name="role" placeholder="Role Filter" />
-    <input type="submit" value="Search" />
-</form>
 <table>
     <thead>
         <th>ID</th>
@@ -39,27 +45,25 @@ if (!has_role("Admin")) {
         <th>Last Name</th>
     </thead>
     <tbody>
-        <?php if (empty($roles)) : ?>
+        <?php if (empty($users)) : ?>
             <tr>
                 <td colspan="100%">No roles</td>
             </tr>
         <?php else : ?>
-            <?php foreach ($roles as $role) : ?>
+            <?php foreach ($users as $user) : ?>
                 <tr>
-                    <td><?php se($role, "id"); ?></td>
-                    <td><?php se($role, "name"); ?></td>
-                    <td><?php se($role, "description"); ?></td>
-                    <td><?php echo (se($role, "is_active", 0, false) ? "active" : "disabled"); ?></td>
-                    <td>
-                        <form method="POST">
-                            <input type="hidden" name="role_id" value="<?php se($role, 'id'); ?>" />
-                            <?php if (isset($search) && !empty($search)) : ?>
-                                <?php /* if this is part of a search, lets persist the search criteria so it reloads correctly*/ ?>
-                                <input type="hidden" name="role" value="<?php se($search, null); ?>" />
-                            <?php endif; ?>
-                            <input type="submit" value="Toggle" />
-                        </form>
-                    </td>
+                    <td><?php se($user, "id"); ?></td>
+                    <td><?php
+                        if($user['public'] == 1){
+                            se($user, 'email');
+                        }else{
+                            echo "-";
+                        }
+                    ?></td>
+                    <td><?php se($user, "created"); ?></td>
+                    <td><?php se($user, "username")?></td>
+                    <td><?php se($user, "first_name")?></td>
+                    <td><?php se($user, "last_name")?></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
