@@ -10,6 +10,7 @@ if (isset($_POST["save"])) {
     $fname = se($_POST, "fname", null, false);
     $lname = se($_POST, "lname", null, false);
     $hasError = false;
+    $vis = se($_POST, "vis", null, false);
     //sanitize
     $email = sanitize_email($email);
     //validate
@@ -55,7 +56,6 @@ if (isset($_POST["save"])) {
         try{
             $stmt->execute();
             $stmt2->execute();
-            echo "Name details saved";
         } catch (Exception $e) {
             echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
         } 
@@ -63,6 +63,14 @@ if (isset($_POST["save"])) {
         flash("Error with names: Please only enter alphabetical characters in name fields", "warning");
     }
 
+    if($vis){
+        $stmt = $db->prepare("UPDATE Users set public=$vis WHERE id=$uid");
+        try{
+            $stmt->execute();
+        }catch (Exception $e) {
+            echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+        }
+    }
 
     //check/update password
     $current_password = se($_POST, "currentPassword", null, false);
@@ -119,6 +127,12 @@ $username = get_username();
     <div class="mb-3">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" value="<?php se($username); ?>" />
+    </div>
+    <div class="mb-3">
+        <label for="public">Public</label>
+        <input type="radio" id="public" name="vis" value="True">
+        <label for="save">Private</label>
+        <input type="radio" id="public" name="vis" value="False">
     </div><br>
 
     <h3>Change Name</h3>
@@ -143,7 +157,7 @@ $username = get_username();
     <div class="mb-3">
         <label for="conp">Confirm Password</label>
         <input type="password" name="confirmPassword" id="conp" />
-    </div>
+    </div><br>
     <input type="submit" value="Update Profile" name="save" />
 </form>
 
