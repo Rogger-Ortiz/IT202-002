@@ -90,6 +90,7 @@ if(isset($_POST['start']) && isset($_POST['end'])){
 <?php endif; ?>
 
 <?php
+    if(isset($_POST['vis'])){
     $vis = $_POST['vis'];
     if($vis){
         $stmt = $db->prepare("UPDATE Accounts set is_active=$vis WHERE account_number=$results[0]['account_number']");
@@ -99,6 +100,7 @@ if(isset($_POST['start']) && isset($_POST['end'])){
             echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
         }
     }
+}
 ?>
 
 <br><h3>Transaction History</h3>
