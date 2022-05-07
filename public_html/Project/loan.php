@@ -199,6 +199,7 @@ if(isset($_POST["loan"]) && !$hasError){
         $stmt2->execute();
         $stmt3->execute();
         $stmt4->execute();
+        $stmt5->execute();
 
         flash("Successfully took out a loan!", "success");
         die(header("Location: accounts.php"));
