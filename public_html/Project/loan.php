@@ -214,6 +214,8 @@ if(isset($_POST["loan"]) && !$hasError){
 
 if(isset($_POST["submit2"])){
     $hasError = false;
+    $limit = -1;
+    $loanlimit = -1;
 
     if($_POST['from'] == "Account"){
         flash("Please choose an account to pay from", "warning");
