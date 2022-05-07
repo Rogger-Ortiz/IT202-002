@@ -81,9 +81,9 @@ if(isset($_POST['start']) && isset($_POST['end'])){
     <form method="POST" onsubmit="return validate(this);">
     <div class="mb-3">
         <label for="public">Open</label>
-        <input type="radio" id="public" name="vis" value="True">
+        <input type="radio" id="public" name="vis" value=True>
         <label for="save">Closed</label>
-        <input type="radio" id="public" name="vis" value="False">
+        <input type="radio" id="public" name="vis" value=False>
     </div>
     <input type="submit" value="Open/Close Account" name="save" />
     </form>
