@@ -50,7 +50,8 @@ if (!has_role("Admin")) {
                 <td colspan="100%">No roles</td>
             </tr>
         <?php else : ?>
-            <?php foreach ($users as $user) : ?>
+            <?php foreach ($users as $usercol) : ?>
+                <?php foreach($usercol as $user) : ?>
                 <tr>
                     <td><?php se($user, "id"); ?></td>
                     <td><?php
@@ -65,6 +66,7 @@ if (!has_role("Admin")) {
                     <td><?php se($user, "first_name")?></td>
                     <td><?php se($user, "last_name")?></td>
                 </tr>
+                <?php endforeach; ?>
             <?php endforeach; ?>
         <?php endif; ?>
     </tbody>
