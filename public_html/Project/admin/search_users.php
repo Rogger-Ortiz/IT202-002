@@ -7,6 +7,7 @@ if (!has_role("Admin")) {
     die(header("Location: " . get_url("home.php")));
 }
 ?>
+<h1>List Users</h1>
 
 <h3>Filter:</h3>
 <form method="POST">
@@ -46,8 +47,6 @@ if (!has_role("Admin")) {
         $users = $l;
     }
 ?>
-
-<h1>List Users</h1>
 <table>
     <thead>
         <th>ID</th>
