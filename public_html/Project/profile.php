@@ -124,7 +124,7 @@ $username = get_username();
         <label for="public">Public</label>
         <input type="radio" id="public" name="vis" value="True">
         <label for="save">Private</label>
-        <input type="public" id="public" name="vis" value="False">
+        <input type="radio" id="public" name="vis" value="False">
     </div><br>
 
     <h3>Change Name</h3>
