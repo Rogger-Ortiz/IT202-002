@@ -24,7 +24,7 @@ $results = [];
 
  $results3 = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id = $uid AND account_type == 'Loan'");
+ $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id = $uid AND account_type = 'Loan'");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
