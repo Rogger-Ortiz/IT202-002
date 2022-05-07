@@ -107,9 +107,10 @@ if(isset($_POST['start']) && isset($_POST['end'])){
         }
     }
 }
+echo "<br>"
 ?>
 
-<br><h3>Transaction History</h3>
+<h3>Transaction History</h3>
 <?php
  $results = [];
  $uid = get_user_id();

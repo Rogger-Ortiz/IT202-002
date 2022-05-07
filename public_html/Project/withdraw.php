@@ -54,7 +54,7 @@ if(isset($_POST['account']) && $_POST['account'] != "Account"){
  $useracc = $_POST['account'];
  // Grab upper limit of account
  $results = [];
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$useracc AND is_active = 1 LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -124,7 +124,7 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
 
  // User Insert Stats
  $results = [];
- $stmt = $db->prepare("SELECT id FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
+ $stmt = $db->prepare("SELECT id FROM Accounts WHERE user_id=$uid AND account_number=$useracc AND is_active = 1 LIMIT 1");
  try {
      $stmt->execute();
      $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -149,7 +149,7 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
 
  // Grab both accounts expected totals for insertion
     $results = [];
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=-1 LIMIT 1");
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=-1 AND is_active = 1 LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -163,7 +163,7 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $wbal = $results[0]['balance'];
     $wbal = strval($wbal);
 
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$useracc LIMIT 1");
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$useracc AND is_active = 1 LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
