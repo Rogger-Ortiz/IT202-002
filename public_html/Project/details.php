@@ -77,6 +77,31 @@ if(isset($_POST['start']) && isset($_POST['end'])){
 </table>
 <br>
 
+<?php if($results[0]["balance"] == 0): ?>
+    <form method="POST" onsubmit="return validate(this);">
+    <div class="mb-3">
+        <label for="public">Open</label>
+        <input type="radio" id="public" name="vis" value="True">
+        <label for="save">Closed</label>
+        <input type="radio" id="public" name="vis" value="False">
+    </div>
+    <input type="submit" value="Open/Close Account" name="save" />
+    </form>
+<?php endif; ?>
+
+<?php
+    $vis = $_POST['vis'];
+    if($vis){
+        $stmt = $db->prepare("UPDATE Accounts set is_active=$vis WHERE account_number=$results[0]['account_number']");
+        try{
+            $stmt->execute();
+        }catch (Exception $e) {
+            echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+        }
+    }
+?>
+
+<br><h3>Transaction History</h3>
 <?php
  $results = [];
  $uid = get_user_id();
