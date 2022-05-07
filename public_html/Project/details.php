@@ -92,8 +92,9 @@ if(isset($_POST['start']) && isset($_POST['end'])){
 <?php
     if(isset($_POST['vis'])){
     $vis = $_POST['vis'];
+    $visnum = $results[0]["account_number"];
     if($vis){
-        $stmt = $db->prepare("UPDATE Accounts set is_active=$vis WHERE account_number=$results[0]['account_number']");
+        $stmt = $db->prepare("UPDATE Accounts set is_active=$vis WHERE account_number=$visnum");
         try{
             $stmt->execute();
         }catch (Exception $e) {
