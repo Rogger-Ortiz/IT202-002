@@ -30,7 +30,7 @@ if (!has_role("Admin")) {
     $stmt->execute();
     $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($l) {
-        $results = $l;
+        $users = $l;
     }
 ?>
 
