@@ -119,6 +119,12 @@ $username = get_username();
     <div class="mb-3">
         <label for="username">Username</label>
         <input type="text" name="username" id="username" value="<?php se($username); ?>" />
+    </div>
+    <div class="mb-3">
+        <label for="public">Public</label>
+        <input type="radio" id="public" name="vis" value="True">
+        <label for="save">Private</label>
+        <input type="public" id="public" name="vis" value="False">
     </div><br>
 
     <h3>Change Name</h3>
