@@ -192,7 +192,8 @@ if(isset($_POST["loan"]) && !$hasError){
     $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($uAccID, $worldacc, $bal, 'Deposit', 'Loan Taken', $bal)");
 
     # Plus balace for destination account
-    $stmt4 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($uAccID, $destID, ($bal*-1), 'Deposit', 'Loan Deposited', $newbal)");
+    $stmt4 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($uAccID, $destID, ($bal*-1), 'Deposit', 'Loan Deposited', $bal)");
+    $stmt5 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($destID, $uAccID, $bal, 'Deposit', 'Loan Deposited', $newbal)");
 
     try {
         $stmt2->execute();
