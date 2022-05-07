@@ -129,7 +129,7 @@ if(isset($_POST["loan"]) && !$hasError){
 
     $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$bal) WHERE user_id=-1");
     $balstmt->execute();
-    $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$bal) WHERE user_id=$uid AND account_number=$destID");
+    $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$bal) WHERE user_id=$uid AND account_number=$useracc");
     $balstmt->execute();
 
     // This grabs columns of a table using $results[r][c] where r="rownumber" and c="colname"
