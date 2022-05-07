@@ -203,7 +203,7 @@ $curpage = $_GET['page'];
     if($curpage==1){
         $leftbound = "";
     }else{
-        $leftbound = get_url('transactions.php') . "?account=" . $accnum . "&page=" . ($curpage-1);
+        $leftbound = get_url('details.php') . "?account=" . $accnum . "&page=" . ($curpage-1);
     }
 
     $rightbound;
