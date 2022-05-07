@@ -54,6 +54,7 @@ $results = [];
 </form>
 
 <h1>Pay a Loan</h1>
+<h3>Please fill in the details below to pay off a loan:</h3>
 
 <form onsubmit="return validate(this)" method="POST">
         <label for="from">Pay from:</label>
@@ -65,7 +66,7 @@ $results = [];
                         echo("<option value=$hold>$hold</option>");
                     }
                 ?>
-            </select>
+            </select><br>
 
 
         <label for="to">Pay off of this account: </label>
@@ -77,7 +78,7 @@ $results = [];
                         echo("<option value=$hold>$hold</option>");
                     }
                 ?>
-            </select>
+            </select><br>
 
         <label for="amount">Amount: </label>
         <input type="number" id="amount" name="amount"><br>
