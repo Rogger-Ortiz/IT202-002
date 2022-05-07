@@ -16,9 +16,6 @@ if (!has_role("Admin")) {
     <label for="lname">Last Name:</label>
     <input type="text" id="lname" name="lname"><br>
 
-    <label for="num">Account Number:</label>
-    <input type="number" id="num" name="num"><br>
-
     <input type="submit" name="submit" value="Filter" />
 </form>
 
