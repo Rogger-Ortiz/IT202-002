@@ -25,14 +25,13 @@ if (!has_role("Admin")) {
 <?php
     $db = getDB();
     $users = [];
-    $query = "SELECT id, email, created, username, first_name, last_name FROM Users";
+    $query = "SELECT id, email, created, username, first_name, last_name FROM Users WHERE id>0";
     $stmt = $db->prepare($query);
     $stmt->execute();
     $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
     if ($l) {
         $users = $l;
     }
-    print_r($users[0]);
 ?>
 
 <h1>List Users</h1>
@@ -48,10 +47,11 @@ if (!has_role("Admin")) {
     <tbody>
         <?php if (empty($users)) : ?>
             <tr>
-                <td colspan="100%">No roles</td>
+                <td colspan="100%">No users</td>
             </tr>
         <?php else : ?>
-            <?php foreach ($users[0] as $user) : ?>
+            <?php foreach ($users as $user) : ?>
+                <?php print_r($user); ?>
                 <tr>
                     <td><?php se($user, "id"); ?></td>
                     <td><?php
