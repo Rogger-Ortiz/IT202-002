@@ -28,6 +28,7 @@ if (is_logged_in(true)) {
         <th>Account Type</th>
         <th>Modified</th>
         <th>Balance</th>
+        <th>APY</th>
     </thead>
     <tbody>
         <?php if (empty($results)) : ?>
@@ -41,6 +42,33 @@ if (is_logged_in(true)) {
                     <td><?php se($item, "account_type"); ?></td>
                     <td><?php se($item, "modified"); ?></td>
                     <td><?php se($item, "balance"); ?></td>
+                    <td>
+                        <?php
+                            $acc = se($item, "account_type");
+                            $sys = [];
+                            $stmt = $db->prepare("SELECT * FROM Sys");
+                            $stmt->execute();
+                            $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                            if ($l) {
+                                $sys = $l;
+                            }
+
+                            if($acc == "Loan" || $acc == "Savings"){
+                                if($acc == "Loan"){
+                                    $apy = $sys[0]["loan_apy"];
+                                    $apy*=100;
+                                    echo "$apy" . "%";
+                                }
+                                if($acc == "Savings"){
+                                    $apy = $sys[0]["savings_apy"];
+                                    $apy*=100;
+                                    echo "$apy" . "%";
+                                }
+                            }else{
+                                echo "-";
+                            }
+                        ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>

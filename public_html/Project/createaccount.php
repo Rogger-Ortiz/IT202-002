@@ -15,7 +15,7 @@ if (is_logged_in(true)) {
         <label for="check">Checking</label>
         <input type="radio" id="check" name="account" value="Checking"><br>
 
-        <label for="save">Savings</label>
+        <label for="save">Savings (APY: 1%)</label>
         <input type="radio" id="save" name="account" value="Savings"><br><br>
     
         <label for="deposit">Deposit</label>
