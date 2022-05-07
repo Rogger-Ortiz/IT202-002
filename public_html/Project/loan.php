@@ -96,7 +96,7 @@ if(isset($_POST['submit'])){
         $hasError = true;
     }
     
-    if(isset($_POST["account"]) == "Account"){
+    if(isset($_POST["account"]) && $_POST['account'] == "Account"){
         flash("Please select an account to deposit to", "warning");
         $hasError = true;
     }    
