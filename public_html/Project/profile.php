@@ -56,7 +56,6 @@ if (isset($_POST["save"])) {
         try{
             $stmt->execute();
             $stmt2->execute();
-            echo "Name details saved";
         } catch (Exception $e) {
             echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
         } 
@@ -158,7 +157,7 @@ $username = get_username();
     <div class="mb-3">
         <label for="conp">Confirm Password</label>
         <input type="password" name="confirmPassword" id="conp" />
-    </div>
+    </div><br>
     <input type="submit" value="Update Profile" name="save" />
 </form>
 
