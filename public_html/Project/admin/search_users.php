@@ -31,13 +31,13 @@ if (!has_role("Admin")) {
         if(isset($_POST['fname'])){
             $fname = $_POST['fname'];
             if(ctype_alpha($fname)){
-                $query .= "AND first_name = $fname";
+                $query .= " AND first_name = $fname";
             }
         }
         if(isset($_POST['lname'])){
             $lname = $_POST['lname'];
             if(ctype_alpha($lname)){
-                $query .= "AND last_name = $lname";
+                $query .= " AND last_name = $lname";
             }
         }
     }
