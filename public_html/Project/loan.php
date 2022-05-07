@@ -299,7 +299,7 @@ if(isset($_POST["submit2"])){
   $transamt = $_POST['amount'];
   $memo = "Loan Payment";
 
-  $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$transamt) WHERE account_number=$accdest");
+  $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$transamt) WHERE account_number=$accdest");
   $balstmt->execute();
   $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$transamt) WHERE account_number=$accsrc");
   $balstmt->execute();
