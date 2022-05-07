@@ -5,7 +5,6 @@ require(__DIR__ . "/../../../partials/nav.php");
 if (!has_role("Admin")) {
     flash("You don't have permission to view this page", "warning");
     die(header("Location: " . get_url("home.php")));
-    $db = getDB();
 }
 ?>
 
@@ -24,6 +23,7 @@ if (!has_role("Admin")) {
 </form>
 
 <?php
+    $db = getDB();
     $users = [];
     $query = "SELECT id, email, created, username, first_name, last_name FROM Users";
     $stmt = $db->prepare($query);
