@@ -38,7 +38,7 @@ if (is_logged_in(true)) {
         <?php else : ?>
             <?php foreach ($results as $item) : ?>
                 <tr>
-                    <td><a href="<?php echo get_url('transactions.php'); ?>?account=<?php se($item, "id");?>&page=1"><?php se($item, "account_number"); ?></a></td>
+                    <td><a href="<?php echo get_url('details.php'); ?>?account=<?php se($item, "id");?>&page=1"><?php se($item, "account_number"); ?></a></td>
                     <td><?php se($item, "account_type"); ?></td>
                     <td><?php se($item, "modified"); ?></td>
                     <td><?php se($item, "balance"); ?></td>

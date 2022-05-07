@@ -2,7 +2,7 @@
 require(__DIR__ . "/../../partials/nav.php");
 $_SESSION['account'] = $_GET['account'];
 ?>
-<h1>Transaction History</h1>
+<h1>Account Details</h1>
 
 <?php
 if (is_logged_in(true)) {
