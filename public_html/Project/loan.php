@@ -233,38 +233,42 @@ if(isset($_POST["submit2"])){
     $useracc = $_POST['from'];
     $loanacc = $_POST['to'];
 
-    $results = [];
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
-    try {
-        $stmt->execute();
-        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if ($r) {
-            $results = $r;
+    if($_POST['from'] != "Account"){
+        $results = [];
+        $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
+        try {
+            $stmt->execute();
+            $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($r) {
+                $results = $r;
+            }
+        } catch (PDOException $e) {
+            error_log(var_export($e, true));
+            flash("Error fetching items", "danger");
         }
-    } catch (PDOException $e) {
-        error_log(var_export($e, true));
-        flash("Error fetching items", "danger");
-    }
-    if($results){
-    $limit = $results[0]['balance'];
-    $limit = (int)$limit;
+        if($results){
+            $limit = $results[0]['balance'];
+            $limit = (int)$limit;
+        }
     }
 
-    $results = [];
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$loanacc LIMIT 1");
-    try {
-        $stmt->execute();
-        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        if ($r) {
-            $results = $r;
+    if($_POST['to'] != "Account"){
+        $results = [];
+        $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$loanacc LIMIT 1");
+        try {
+            $stmt->execute();
+            $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            if ($r) {
+                $results = $r;
+            }
+        } catch (PDOException $e) {
+            error_log(var_export($e, true));
+            flash("Error fetching items", "danger");
         }
-    } catch (PDOException $e) {
-        error_log(var_export($e, true));
-        flash("Error fetching items", "danger");
-    }
-    if($results){
-    $loanlimit = $results[0]['balance'];
-    $loanlimit = (int)$loanlimit;
+        if($results){
+            $loanlimit = $results[0]['balance'];
+            $loanlimit = (int)$loanlimit;
+        }
     }
 
     if($_POST['amount'] > $limit){
@@ -278,6 +282,12 @@ if(isset($_POST["submit2"])){
     }
 
     if(!$hasError){
+        $payto = $_POST['to'];
+        $payfrom = $_POST['from'];
+        $toID = toAccId($payto);
+        $fromID = toAccId($payfrom);
+
+
     }
 
 }

@@ -53,7 +53,7 @@ $limval = false;
 if(isset($_POST['account']) && $_POST['account'] != "Account"){
  $useracc = $_POST['account'];
  // Grab upper limit of account
-$results = [];
+ $results = [];
     $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
     try {
         $stmt->execute();
