@@ -65,7 +65,7 @@ if (isset($_POST["save"])) {
     }
 
     if($vis){
-        $stmt = $db->prepare("UPDATE Users set public=$vis, where id=$uid");
+        $stmt = $db->prepare("UPDATE Users set public=$vis WHERE id=$uid");
         try{
             $stmt->execute();
         }catch (Exception $e) {
