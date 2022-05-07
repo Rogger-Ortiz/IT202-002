@@ -95,6 +95,11 @@ if(isset($_POST["loan"]) && $_POST["loan"] < 500){
     $hasError = true;
 }
 
+if(isset($_POST["account"]) == "Account"){
+    flash("Please select an account to deposit to", "warning");
+    $hasError = true;
+}
+
 
 ###############################################################################################################################################
 if(isset($_POST["loan"]) && !$hasError){
