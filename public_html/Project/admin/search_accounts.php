@@ -12,7 +12,7 @@ if (!has_role("Admin")) {
  $db = getDB();
  $results = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE  is_active = 1 ORDER BY modified desc LIMIT 10");
+ $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id != -1 ORDER BY modified desc LIMIT 10");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
