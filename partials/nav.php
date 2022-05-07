@@ -49,6 +49,7 @@ session_start();
             <li><a href="<?php echo get_url('admin/list_roles.php'); ?>">List Roles</a></li>
             <li><a href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a></li>
             <li><a href="<?php echo get_url('admin/search_users.php'); ?>">Search Users</a></li>
+            <li><a href="<?php echo get_url('admin/search_accounts.php'); ?>">Search Accounts</a></li>
         <?php endif; ?>
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('logout.php'); ?>">Logout</a></li>
