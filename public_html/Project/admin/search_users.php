@@ -32,7 +32,7 @@ if (!has_role("Admin")) {
     if ($l) {
         $users = $l;
     }
-    print_r($users);
+    print_r($users[0]);
 ?>
 
 <h1>List Users</h1>
