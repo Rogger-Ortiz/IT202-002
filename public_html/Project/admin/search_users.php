@@ -19,13 +19,29 @@ if (!has_role("Admin")) {
     <label for="num">Account Number:</label>
     <input type="number" id="num" name="num"><br>
 
-    <input type="submit" value="Filter" />
+    <input type="submit" name="submit" value="Filter" />
 </form>
 
 <?php
     $db = getDB();
     $users = [];
     $query = "SELECT id, email, created, username, first_name, last_name, public FROM Users WHERE id>0";
+
+    if(isset($_POST['submit'])){
+        if(isset($_POST['fname'])){
+            $fname = $_POST['fname'];
+            if(ctype_alpha($fname)){
+                $query .= "AND first_name = $fname";
+            }
+        }
+        if(isset($_POST['lname'])){
+            $lname = $_POST['lname'];
+            if(ctype_alpha($lname)){
+                $query .= "AND last_name = $lname";
+            }
+        }
+    }
+
     $stmt = $db->prepare($query);
     $stmt->execute();
     $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
