@@ -34,6 +34,7 @@ if (!has_role("Admin")) {
  }
 
  $query .= " ORDER BY modified desc LIMIT 10";
+ $stmt = $db->prepare($query);
  if(!$hasError){
      $stmt->execute();
      $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
