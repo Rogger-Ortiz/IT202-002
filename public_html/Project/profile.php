@@ -10,6 +10,7 @@ if (isset($_POST["save"])) {
     $fname = se($_POST, "fname", null, false);
     $lname = se($_POST, "lname", null, false);
     $hasError = false;
+    $vis = se($_POST, "vis", null, false);
     //sanitize
     $email = sanitize_email($email);
     //validate
@@ -63,6 +64,14 @@ if (isset($_POST["save"])) {
         flash("Error with names: Please only enter alphabetical characters in name fields", "warning");
     }
 
+    if($vis){
+        $stmt = $db->prepare("UPDATE Users set public=$vis, where id=$uid");
+        try{
+            $stmt->execute();
+        }catch (Exception $e) {
+            echo "<pre>" . var_export($e->errorInfo, true) . "</pre>";
+        }
+    }
 
     //check/update password
     $current_password = se($_POST, "currentPassword", null, false);
