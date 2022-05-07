@@ -8,13 +8,14 @@ if (is_logged_in(true)) {
     //comment this out if you don't want to see the session variables
     error_log("Session data: " . var_export($_SESSION, true));
 }
+$db=getDB();
 ?>
 
 <?php
 
 $results = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id = $uid AND account_type != 'Loan'");
+ $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id=$uid AND account_type != 'Loan'");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -266,7 +267,7 @@ if(isset($_POST["submit2"])){
     }
 
     if(!$hasError){
-        
+
     }
 
 }
