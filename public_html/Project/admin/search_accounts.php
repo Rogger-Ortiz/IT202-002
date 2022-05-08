@@ -37,12 +37,9 @@ if (!has_role("Admin")) {
     }else{
         flash("Please only use digits in account number", "warning");
     }
- }
-
-    $accnum = $item['account_number'];
     $res = [];
     if(isset($_POST['submit2'])){
-        $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number=$accnum LIMIT 1");
+        $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number=$numval LIMIT 1");
         $stmt->execute();
         $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
         $frozen = $res[0]['frozen'];
@@ -59,6 +56,7 @@ if (!has_role("Admin")) {
             flash("Something went wrong", "warning");
         }
     }
+}
 
  $query .= " ORDER BY modified desc LIMIT 10";
  $stmt = $db->prepare($query);
