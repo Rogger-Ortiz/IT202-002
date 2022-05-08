@@ -1,20 +1,19 @@
 <?php
-require(__DIR__ . "/../../partials/nav.php");
-?>
-<h1>Accounts</h1>
+//note we need to go up 1 more directory
+require(__DIR__ . "/../../../partials/nav.php");
 
-<?php
-if (is_logged_in(true)) {
-    //comment this out if you don't want to see the session variables
-    error_log("Session data: " . var_export($_SESSION, true));
+if (!has_role("Admin")) {
+    flash("You don't have permission to view this page", "warning");
+    die(header("Location: " . get_url("home.php")));
+    
 }
-$var = "hi";
+$_SESSION['account'] = $_GET['account'];
 ?>
 
 <?php
  $db = getDB();
  $results = [];
- $uid = get_user_id();
+ $uid = $_SESSION['account'];
  $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance, frozen FROM Accounts WHERE user_id = $uid AND is_active = 1 ORDER BY modified desc LIMIT 10");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -31,6 +30,7 @@ $var = "hi";
         <th>Balance</th>
         <th>APY</th>
         <th>Frozen</th>
+        <th>Toggle Freeze</th>
     </thead>
     <tbody>
         <?php if (empty($results)) : ?>
@@ -73,15 +73,16 @@ $var = "hi";
                     </td>
                     <td>
                         <?php
-                            $isdis = $item["frozen"];
-                            if($isdis == True){
+                            $frozen = $item["frozen"];
+                            if($frozen == True){
                                 echo "Yes";
                             }
-                            if($isdis == False){
+                            if($frozen == False){
                                 echo "No";
                             }
                         ?>
                     </td>
+                    <td><a href="<?php echo get_url('admin/freeze_account.php'); ?>?account=<?php se($item, "account_number");?>&page=2">Toggle Freeze</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
@@ -89,5 +90,6 @@ $var = "hi";
 </table>
 
 <?php
-require(__DIR__ . "/../../partials/flash.php");
+//note we need to go up 1 more directory
+require_once(__DIR__ . "/../../../partials/flash.php");
 ?>

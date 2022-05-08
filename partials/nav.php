@@ -32,6 +32,7 @@ session_start();
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('home.php'); ?>">Home</a></li>
             <li><a href="<?php echo get_url('createaccount.php'); ?>">Open Account</a></li>
+            <li><a href="<?php echo get_url('loan.php'); ?>">Loans</a></li>
             <li><a href="<?php echo get_url('accounts.php'); ?>">My Accounts</a></li>
             <li><a href="<?php echo get_url('deposit.php'); ?>">Deposit</a></li>
             <li><a href="<?php echo get_url('withdraw.php'); ?>">Withdraw</a></li>
@@ -47,6 +48,8 @@ session_start();
             <li><a href="<?php echo get_url('admin/create_role.php'); ?>">Create Role</a></li>
             <li><a href="<?php echo get_url('admin/list_roles.php'); ?>">List Roles</a></li>
             <li><a href="<?php echo get_url('admin/assign_roles.php'); ?>">Assign Roles</a></li>
+            <li><a href="<?php echo get_url('admin/search_users.php'); ?>">Search Users</a></li>
+            <li><a href="<?php echo get_url('admin/search_accounts.php'); ?>">Search Accounts</a></li>
         <?php endif; ?>
         <?php if (is_logged_in()) : ?>
             <li><a href="<?php echo get_url('logout.php'); ?>">Logout</a></li>
