@@ -24,5 +24,5 @@ $stmt = $db->prepare("UPDATE Users SET is_disabled = !$disval WHERE id = $uid");
 $stmt->execute();
 flash("Account Disable Toggled!", "Success");
 
-die(header("Location: admin/search_users.php"));
+die(header("Location: search_users.php"));
 ?>
