@@ -27,7 +27,7 @@ if (!has_role("Admin")) {
  if(isset($_POST['num'])){
     $numval = $_POST['num'];
     if(ctype_digit($numval)){
-        $query .= " AND account_number LIKE %$numval%";
+        $query .= " AND account_number LIKE '%$numval%'";
     }else{
         flash("Please only use digits in account number", "warning");
     }
