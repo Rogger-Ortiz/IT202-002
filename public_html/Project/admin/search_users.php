@@ -10,7 +10,7 @@ if (!has_role("Admin")) {
 <h1>Search Users</h1>
 <?php
  $db = getDB();
- $query = "SELECT id, first_name, last_name FROM Users WHERE id != -1";
+ $query = "SELECT id, first_name, last_name, is_disabled FROM Users WHERE id != -1";
 
  if(isset($_POST['fname'])){
     $fname = $_POST['fname'];
@@ -53,6 +53,7 @@ if (!has_role("Admin")) {
         <th>Last Name</th>
         <th>View Accounts</th>
         <th>Create/Open Account</th>
+        <th>User Disabled<th>
         <th>Deactivate User</th>
     </thead>
     <tbody>
@@ -67,7 +68,18 @@ if (!has_role("Admin")) {
                     <td><?php se($item, "last_name") ?></td>
                     <td><a href="<?php echo get_url('admin/user_accounts.php'); ?>?account=<?php se($item, "id");?>&page=1">Accounts</a></td>
                     <td><a href="<?php echo get_url('admin/create_user_account.php'); ?>?account=<?php se($item, "id");?>&page=1">Create/Open</a></td>
-                    <td></td>
+                    <td>
+                        <?php
+                            $isdis = $item["is_disabled"];
+                            if($isdis == True){
+                                echo "Yes";
+                            }
+                            if($isdis == False){
+                                echo "No";
+                            }
+                        ?>
+                    </td>
+                    <td><a href="<?php echo get_url('admin/deactivate_user.php'); ?>?account=<?php se($item, "id");?>">Toggle Deactivate</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
