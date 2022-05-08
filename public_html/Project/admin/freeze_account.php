@@ -8,10 +8,12 @@ if (!has_role("Admin")) {
     
 }
 $_SESSION['account'] = $_GET['account'];
+$_SESSION['page'] = $_GET['page'];
 ?>
 
 <?php
 $acc = $_SESSION['account'];
+$page = $_SESSION['page'];
 $db = getDB();
 
 $results = [];
@@ -24,5 +26,12 @@ $stmt = $db->prepare("UPDATE Accounts SET frozen = !$disval WHERE account_number
 $stmt->execute();
 flash("Account Freeze Toggled!", "Success");
 
-die(header("Location: search_accounts.php"));
+
+if($page == 1){
+    die(header("Location: search_accounts.php"));
+}
+if($page == 2){
+    
+die(header("Location: user_accounts.php"));
+}
 ?>
