@@ -105,7 +105,6 @@ if (!has_role("Admin")) {
                             $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number=$accnum LIMIT 1");
                             $stmt->execute();
                             $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        }
                         $frozen = $res[0]['frozen'];
 
                         if($frozen == True){
@@ -113,12 +112,13 @@ if (!has_role("Admin")) {
                             $stmt->execute();
                             flash("Account frozen!", "Success");
                         }elseif($frozen == False){
-                            $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$accnum");
+                            $stmt = $db->prepare("UPDATE Accounts SET frozen=True WHERE account_number=$accnum");
                             $stmt->execute();
                             flash("Account unfrozen!", "Success");
                         }else{
                             flash("Something went wrong", "warning");
                         }
+                    }
 
                     ?>
 
