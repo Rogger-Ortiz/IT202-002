@@ -59,7 +59,7 @@ if (!has_role("Admin")) {
     <tbody>
         <?php if (empty($results)) : ?>
             <tr>
-                <td colspan="100%">No Transactions</td>
+                <td colspan="100%">No Users</td>
             </tr>
         <?php else : ?>
             <?php foreach ($results as $item) : ?>
