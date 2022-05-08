@@ -28,7 +28,37 @@ if (!has_role("Admin")) {
  $results = [];
  $hasError = false;
 
- $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id != 1"; 
+ $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id > 0";
+
+ if(isset($_POST['submit'])){
+    $numval = $_POST['number'];
+    if(ctype_digit($numval)){
+        $query .= " AND account_number LIKE '%$numval%'";
+    }else{
+        flash("Please only use digits in account number", "warning");
+    }
+ }
+
+    $res = [];
+    if(isset($_POST['submit2'])){
+        $accnum = $_POST['num2'];
+        $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number=$accnum LIMIT 1");
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $frozen = $res[0]['frozen'];
+
+        if($frozen == True){
+         $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$accnum");
+         $stmt->execute();
+         flash("Account frozen!", "Success");
+        }elseif($frozen == False){
+            $stmt = $db->prepare("UPDATE Accounts SET frozen=True WHERE account_number=$accnum");
+            $stmt->execute();
+            flash("Account unfrozen!", "Success");
+        }else{
+            flash("Something went wrong", "warning");
+        }
+    }
 
  $query .= " ORDER BY modified desc LIMIT 10";
  $stmt = $db->prepare($query);
@@ -39,34 +69,6 @@ if (!has_role("Admin")) {
         $results = $l;
     }
  }
-
- if(isset($_POST['submit2'])){
-    $numval = $_POST['num2'];
-    if(ctype_digit($numval)){
-        $query .= " AND account_number LIKE '%$numval%'";
-    }else{
-        flash("Please only use digits in account number", "warning");
-    }
-    $res = [];
-    if(isset($_POST['submit2'])){
-        $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number=$numval LIMIT 1");
-        $stmt->execute();
-        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-        $frozen = $res[0]['frozen'];
-
-        if($frozen == True){
-         $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$numval");
-         $stmt->execute();
-         flash("Account frozen!", "Success");
-        }elseif($frozen == False){
-            $stmt = $db->prepare("UPDATE Accounts SET frozen=True WHERE account_number=$numval");
-            $stmt->execute();
-            flash("Account unfrozen!", "Success");
-        }else{
-            flash("Something went wrong", "warning");
-        }
-    }
-}
  
 ?>
 
