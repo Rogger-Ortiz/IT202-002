@@ -12,14 +12,14 @@ if (!has_role("Admin")) {
 <h3>Filter:</h3>
 <form method="POST">
     <label for="num">Account Number:</label>
-    <input type="number" id="number" name="num"><br>
+    <input type="text" id="number" name="num"><br>
 
     <input type="submit" name="submit" value="Filter" />
 </form>
 
 <form method="POST">
 <label for="num2">Account To Freeze/Unfreeze:</label>
-    <input type="num2" id="num2" name="num2"><br>
+    <input type="text" id="num2" name="num2"><br>
     <input type="submit" name="submit2" value="Toggle" />
 </form>
 
