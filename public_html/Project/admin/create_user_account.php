@@ -124,7 +124,7 @@ if(isset($_POST["account"]) && !$hasError){
 
         flash("Successfully registered!", "success");
         
-        die(header("Location: admin/search_accounts.php"));
+        die(header("Location: search_accounts.php"));
     } catch (Exception $e) {
         flash($e);
       }
