@@ -336,7 +336,7 @@ if(isset($_POST["submit2"])){
   $dbal = $results[0]['balance'];
   $dbal = (int)$dbal;
 
-  $wacc = -1;
+  $wacc = 1;
   $results = [];
   $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number='000000000000' LIMIT 1");
     try {
