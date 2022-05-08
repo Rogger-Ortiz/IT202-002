@@ -10,7 +10,7 @@ if (!has_role("Admin")) {
 
 <?php
  $db = getDB();
- $stmt = $db->prepare("SELECT first_name, last_name FROM Users");
+ $stmt = $db->prepare("SELECT id, first_name, last_name FROM Users WHERE id != -1");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
