@@ -10,7 +10,7 @@ if (!has_role("Admin")) {
 <h1>Search Users</h1>
 <?php
  $db = getDB();
- $query = "SELECT id, first_name, last_name, is_disabled FROM Users WHERE id != -1";
+ $query = "SELECT id, email, first_name, last_name, public, is_disabled FROM Users WHERE id != -1";
 
  if(isset($_POST['fname'])){
     $fname = $_POST['fname'];
@@ -51,6 +51,7 @@ if (!has_role("Admin")) {
     <thead>
         <th>First Name</th>
         <th>Last Name</th>
+        <th>Email</th>
         <th>View Accounts</th>
         <th>Create/Open Account</th>
         <th>User Disabled</th>
@@ -66,6 +67,17 @@ if (!has_role("Admin")) {
                 <tr>
                     <td><?php se($item, "first_name") ?></td>
                     <td><?php se($item, "last_name") ?></td>
+                    <td>
+                        <?php
+                            $ispub = $item["public"];
+                            if($ispub == True){
+                                se($item, 'email');
+                            }
+                            if($ispub == False){
+                                echo "-";
+                            }
+                        ?>
+                    </td>
                     <td><a href="<?php echo get_url('admin/user_accounts.php'); ?>?account=<?php se($item, "id");?>&page=1">Accounts</a></td>
                     <td><a href="<?php echo get_url('admin/create_user_account.php'); ?>?account=<?php se($item, "id");?>&page=1">Create/Open</a></td>
                     <td>
