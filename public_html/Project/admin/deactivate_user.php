@@ -7,7 +7,7 @@ if (!has_role("Admin")) {
     die(header("Location: " . get_url("home.php")));
     
 }
-$_SESSION['accound'] = $_GET['account'];
+$_SESSION['account'] = $_GET['account'];
 ?>
 
 <?php
