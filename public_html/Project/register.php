@@ -90,6 +90,7 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm
             $stmt->execute([":email" => $email, ":password" => $hash, ":username" => $username]);
             flash("Successfully registered!", "success");
         } catch (Exception $e) {
+            print($e);
             users_check_duplicate($e->errorInfo);
         }
     }
