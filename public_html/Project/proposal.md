@@ -117,6 +117,7 @@
     -  Link to related feature: [Ext-Transfer Page](https://ro77-prod.herokuapp.com/Project/telle.php)
 
 - Milestone 4
+- Link to related video: [Video](https://youtu.be/nJbjyPLO5YA)
   - [x] \(05/06/2022 of completion) User can set their profile to private/public
     -  Link to related .md file: [Milestone4](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone4.md)
     -  Link to related pull : [Profile Vis](https://github.com/Rogger-Ortiz/IT202-002/pull/95)
