@@ -52,6 +52,7 @@ if (!has_role("Admin")) {
         <th>Modified</th>
         <th>Balance</th>
         <th>APY</th>
+        <th>Toggle Freeze</th>
     </thead>
     <tbody>
         <?php if (empty($results)) : ?>
@@ -91,6 +92,36 @@ if (!has_role("Admin")) {
                                 echo "-";
                             }
                         ?>
+                    </td>
+                    <td>
+                    <form method="POST">
+                        <input type="submit2" name="submit2" value="Toggle" />
+                    </form>
+
+                    <?php
+                        $accnum = $item['account_number'];
+                        $res = [];
+                        if(isset($_POST['submit2'])){
+                            $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number=$accnum LIMIT 1");
+                            $stmt->execute();
+                            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+                        }
+                        $frozen = $res[0]['frozen'];
+
+                        if($frozen == True){
+                            $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$accnum");
+                            $stmt->execute();
+                            flash("Account frozen!", "Success");
+                        }elseif($frozen == False){
+                            $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$accnum");
+                            $stmt->execute();
+                            flash("Account unfrozen!", "Success");
+                        }else{
+                            flash("Something went wrong", "warning");
+                        }
+
+                    ?>
+
                     </td>
                 </tr>
             <?php endforeach; ?>

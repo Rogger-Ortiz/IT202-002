@@ -1,0 +1,2 @@
+ALTER TABLE `Accounts`
+ADD frozen BOOLEAN DEFAULT False;
