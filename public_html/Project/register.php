@@ -85,7 +85,7 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm
         $db = getDB();
         $vis = False;
         $isdis = False;
-        $stmt = $db->prepare("INSERT INTO Users(email, password, username) VALUES('$email', $hash, '$username')");
+        $stmt = $db->prepare("INSERT INTO Users(email, password, username) VALUES('$email', '$hash', '$username')");
         try {
             $stmt->execute();
             flash("Successfully registered!", "success");
