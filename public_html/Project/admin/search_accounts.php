@@ -12,6 +12,13 @@ if (!has_role("Admin")) {
  $db = getDB();
  $query = "SELECT account_number, user_id, frozen FROM Accounts WHERE id != 1";
 
+ if(isset($_POST['acc'])){
+    $acc = $_POST['acc'];
+    if(ctype_digit($acc) == True){
+        $query .= " AND account_number LIKE '$acc'";
+    }
+ }
+
  $stmt = $db->prepare($query);
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -25,7 +32,7 @@ if (!has_role("Admin")) {
 <h3>Search by Account Number:</h3>
 <form method="POST">
     <label for="acc">Account Number:</label>
-    <input type="number" id="num" name="num">
+    <input type="number" id="acc" name="acc">
 
     <input type="submit" value="Filter" />
 </form>
