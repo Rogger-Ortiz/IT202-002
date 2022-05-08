@@ -39,7 +39,7 @@ if (is_logged_in(true)) {
 $db = getDB();
 $uid = $_SESSION['account'];
 $results = [];
-$stmt = $db->prepare("SELECT id, account_number, account_type, modified FROM Accounts WHERE user_id = $uid");
+$stmt = $db->prepare("SELECT id, account_number, account_type, modified FROM Accounts WHERE user_id = $uid AND is_active = 0");
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
@@ -54,7 +54,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <tbody>
         <?php if (empty($results)) : ?>
             <tr>
-                <td colspan="100%">No Users</td>
+                <td colspan="100%">No Disabled Accounts</td>
             </tr>
         <?php else : ?>
             <?php foreach ($results as $item) : ?>
