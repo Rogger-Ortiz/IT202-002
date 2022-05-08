@@ -8,7 +8,6 @@ if (!has_role("Admin")) {
     
 }
 $_SESSION['account'] = $_GET['account'];
-$_SESSION['page'] = $_GET['page'];
 ?>
 
 <?php
