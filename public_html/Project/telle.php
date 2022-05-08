@@ -149,7 +149,7 @@ if(isset($_POST['submit']) && !$hasError){
         $destfrozen = $results[0]['frozen'];
     }
 
-    if($results || $destfrozen==True){
+    if($results && $destfrozen==False){
         $accdest = $results[0]['account_number'];
         $accsrcID = toAccId($accsrc);
         $accdestID = toAccId($accdest);
