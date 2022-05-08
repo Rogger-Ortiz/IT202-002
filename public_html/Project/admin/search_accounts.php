@@ -32,6 +32,7 @@ if (!has_role("Admin")) {
 
  if(isset($_POST['submit'])){
     $numval = $_POST['number'];
+    $numval = strval($numval);
     if(ctype_digit($numval)){
         $query .= " AND account_number LIKE '%$numval%'";
     }else{
