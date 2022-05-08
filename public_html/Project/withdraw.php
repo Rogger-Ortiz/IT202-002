@@ -15,7 +15,7 @@ $db = getDB();
 
 $results = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id = $uid");
+ $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id = $uid AND account_type != 'Loan' AND frozen = False");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -53,8 +53,8 @@ $limval = false;
 if(isset($_POST['account']) && $_POST['account'] != "Account"){
  $useracc = $_POST['account'];
  // Grab upper limit of account
-$results = [];
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
+ $results = [];
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$useracc AND is_active = 1 LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -124,7 +124,7 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
 
  // User Insert Stats
  $results = [];
- $stmt = $db->prepare("SELECT id FROM Accounts WHERE user_id=$uid AND account_number=$useracc LIMIT 1");
+ $stmt = $db->prepare("SELECT id FROM Accounts WHERE user_id=$uid AND account_number=$useracc AND is_active = 1 LIMIT 1");
  try {
      $stmt->execute();
      $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -149,7 +149,7 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
 
  // Grab both accounts expected totals for insertion
     $results = [];
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=-1 LIMIT 1");
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=-1 AND is_active = 1 LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -163,7 +163,7 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $wbal = $results[0]['balance'];
     $wbal = strval($wbal);
 
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$useracc LIMIT 1");
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$useracc AND is_active = 1 LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -179,8 +179,8 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $Ubal = strval($Ubal);
 
  // Insert Transactions into Transactions table
- $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, ($balchange*-1), 'Withdraw', $wbal, '$memo')");
- $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, $balchange, 'Withdraw', $Ubal, '$memo')");
+ $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, $balchange, 'Withdraw', $wbal, '$memo')");
+ $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, ($balchange*-1), 'Withdraw', $Ubal, '$memo')");
 
  // Execute statements, flash success
  try {

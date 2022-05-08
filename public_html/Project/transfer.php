@@ -18,7 +18,7 @@ $db = getDB();
 
 $results = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id = $uid");
+ $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id = $uid AND account_type != 'Loan' AND is_active = 1 AND frozen = False");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -82,7 +82,7 @@ $limit = 0;
 if(isset($_POST['account']) && ($_POST['account'] != "Account")){
     $accnum = $_POST['account'];
     $results = [];
-    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$accnum LIMIT 1");
+    $stmt = $db->prepare("SELECT balance FROM Accounts WHERE user_id=$uid AND account_number=$accnum AND is_active = 1 LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -130,7 +130,7 @@ if((isset($_POST['account']) && isset($_POST['account2'])) && !($hasError)){
   $balstmt->execute();
 
   $results = [];
-  $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$accsrc LIMIT 1");
+  $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$accsrc AND is_active = 1 LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -145,7 +145,7 @@ if((isset($_POST['account']) && isset($_POST['account2'])) && !($hasError)){
   $sbal = (int)$sbal;
 
   $results = [];
-  $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$accdest LIMIT 1");
+  $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$accdest AND is_active = 1 LIMIT 1");
     try {
         $stmt->execute();
         $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
