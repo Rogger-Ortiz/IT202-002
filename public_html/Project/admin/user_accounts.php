@@ -14,7 +14,7 @@ $_SESSION['account'] = $_GET['account'];
  $db = getDB();
  $results = [];
  $uid = $_SESSION['account'];
- $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE user_id = $uid AND is_active = 1 ORDER BY modified desc LIMIT 10");
+ $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance, frozen FROM Accounts WHERE user_id = $uid AND is_active = 1 ORDER BY modified desc LIMIT 10");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -29,6 +29,7 @@ $_SESSION['account'] = $_GET['account'];
         <th>Modified</th>
         <th>Balance</th>
         <th>APY</th>
+        <th>Frozen</th>
     </thead>
     <tbody>
         <?php if (empty($results)) : ?>
@@ -69,11 +70,48 @@ $_SESSION['account'] = $_GET['account'];
                             }
                         ?>
                     </td>
+                    <td>
+                        <?php
+                            $frozen = $item["frozen"];
+                            if($frozen == True){
+                                echo "Yes";
+                            }
+                            if($frozen == False){
+                                echo "No";
+                            }
+                        ?>
+                    </td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
     </tbody>
 </table>
+
+<h3>Toggle Freeze:</h3>
+<form method="POST">
+    <label for="acc">Account:</label>
+    <input type="number" id="acc" name="acc">
+
+    <input type="submit" value="Toggle" />
+</form>
+
+<?php
+    if(isset($_POST['acc'])){
+        $acc = $_POST['acc'];
+        if(ctype_digit($acc) == True){
+            $db = getDB();
+
+            $fres = [];
+            $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number = $acc LIMIT 1");
+            $stmt->execute();
+            $fres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $frozenval = $stmt[0]['frozen'];
+
+            $stmt = $db->prepare("UPDATE Accounts SET Frozen = !$frozenval");
+            flash("Account Freeze Toggled!", "Success");
+        }
+    }
+?>
 
 <?php
 //note we need to go up 1 more directory
