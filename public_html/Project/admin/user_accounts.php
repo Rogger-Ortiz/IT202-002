@@ -11,18 +11,6 @@ $_SESSION['account'] = $_GET['account'];
 ?>
 
 <?php
- $db = getDB();
- $results = [];
- $uid = $_SESSION['account'];
- $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance, frozen FROM Accounts WHERE user_id = $uid AND is_active = 1 ORDER BY modified desc LIMIT 10");
- $stmt->execute();
- $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
- if ($l) {
-     $results = $l;
- }
-?>
-
-<?php
     if(isset($_POST['acc'])){
         $acc = $_POST['acc'];
         if(ctype_digit($acc) == True){
@@ -39,6 +27,18 @@ $_SESSION['account'] = $_GET['account'];
             flash("Account Freeze Toggled!", "Success");
         }
     }
+?>
+
+<?php
+ $db = getDB();
+ $results = [];
+ $uid = $_SESSION['account'];
+ $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance, frozen FROM Accounts WHERE user_id = $uid AND is_active = 1 ORDER BY modified desc LIMIT 10");
+ $stmt->execute();
+ $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ if ($l) {
+     $results = $l;
+ }
 ?>
 
 <table>
