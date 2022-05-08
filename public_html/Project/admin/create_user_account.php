@@ -9,7 +9,8 @@ if (!has_role("Admin")) {
 $_SESSION['account'] = $_GET['account'];
 ?>
 
-<h1>Create Account</h1>
+<h1>Create/Open Account</h1>
+<h3>Create Account</h3>
 
 <?php
 if (is_logged_in(true)) {
@@ -31,6 +32,41 @@ if (is_logged_in(true)) {
 
         <input type="submit" value="Create" />
 </form>
+
+<h3>Open Account</h3>
+
+<?php
+$uid = $_SESSION['account'];
+$results = [];
+$stmt = $db->prepare("SELECT id, account_number, account_type, modified FROM Accounts WHERE user_id = $uid");
+$stmt->execute();
+$results = $stmt->fetchAll(PDO::FETCH_ASSOC);
+?>
+
+<table>
+    <thead>
+        <th>Account Number</th>
+        <th>Account Type</th>
+        <th>Date Closed</th>
+        <th>Open Account</th>
+    </thead>
+    <tbody>
+        <?php if (empty($results)) : ?>
+            <tr>
+                <td colspan="100%">No Users</td>
+            </tr>
+        <?php else : ?>
+            <?php foreach ($results as $item) : ?>
+                <tr>
+                    <td><a href="<?php echo get_url('details.php'); ?>?account=<?php se($item, "id");?>&page=1"><?php se($item, "account_number"); ?></a></td>
+                    <td><?php se($item, "account_type") ?></td>
+                    <td><?php se($item, "modified") ?></td>
+                    <td><a href="<?php echo get_url('admin/open_account.php'); ?>?account=<?php se($item, "id");?>">Toggle Deactivate</a></td>
+                </tr>
+            <?php endforeach; ?>
+        <?php endif; ?>
+    </tbody>
+</table>
 
 <?php
 $hasError = false;
