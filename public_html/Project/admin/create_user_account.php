@@ -123,7 +123,7 @@ if(isset($_POST["account"]) && !$hasError){
         $stmt3->execute();
 
         flash("Successfully registered!", "success");
-        die(header("Location: accounts.php"));
+        die(header("Location: ../accounts.php"));
     } catch (Exception $e) {
         flash($e);
       }
