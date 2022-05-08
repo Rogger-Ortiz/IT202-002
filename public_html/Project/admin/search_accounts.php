@@ -12,14 +12,14 @@ if (!has_role("Admin")) {
 <h3>Filter:</h3>
 <form method="POST">
     <label for="num">Account Number:</label>
-    <input type="text" id="number" name="num"><br>
+    <input type="number" id="number" name="num"><br>
 
     <input type="submit" name="submit" value="Filter" />
 </form>
 
 <form method="POST">
 <label for="num2">Account To Freeze/Unfreeze:</label>
-    <input type="text" id="num2" name="num2"><br>
+    <input type="number" id="num2" name="num2"><br>
     <input type="submit" name="submit2" value="Toggle" />
 </form>
 
@@ -28,12 +28,12 @@ if (!has_role("Admin")) {
  $results = [];
  $hasError = false;
 
- $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id > 0";
+ $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id != 1";
 
  if(isset($_POST['submit'])){
     $numval = $_POST['number'];
     $numval = strval($numval);
-    if(ctype_digit($numval)){
+    if(ctype_digit($numval) == True){
         $query .= " AND account_number LIKE '%$numval%'";
     }else{
         flash("Please only use digits in account number", "warning");
