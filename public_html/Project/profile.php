@@ -22,7 +22,7 @@ if (isset($_POST["save"])) {
         flash("Username must only contain 3-16 characters a-z, 0-9, _, or -", "danger");
         $hasError = true;
     }
-    if (!$hasError && (isset($_POST['email']) || isset($_POST['username']))) {
+    if (!$hasError) {
         $params = [":email" => $email, ":username" => $username, ":id" => get_user_id()];
         $db = getDB();
         $stmt = $db->prepare("UPDATE Users set email = :email, username = :username where id = :id");
@@ -82,7 +82,7 @@ if (isset($_POST["save"])) {
             flash("Password too short", "danger");
             $hasError = true;
         }
-        if (!$hasError && isset($_POST['newPassword'])) {
+        if (!$hasError) {
             if ($new_password === $confirm_password) {
                 //TODO validate current
                 $stmt = $db->prepare("SELECT password from Users where id = :id");
