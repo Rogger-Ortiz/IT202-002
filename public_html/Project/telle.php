@@ -130,7 +130,7 @@ if(isset($_POST['submit']) && !$hasError){
 
     //Verify User Exists
     $results = [];
-    $stmt = $db->prepare("SELECT Accounts.account_number, Users.last_name
+    $stmt = $db->prepare("SELECT Accounts.account_number, Accounts.frozen, Users.last_name
                           FROM Users
                           INNER JOIN Accounts 
                           ON Users.id = Accounts.user_id
@@ -144,7 +144,12 @@ if(isset($_POST['submit']) && !$hasError){
     } catch (PDOException $e) {
     }
 
+    $destfrozen = false;
     if($results){
+        $destfrozen = $results[0]['frozen'];
+    }
+
+    if($results && $destfrozen==False){
         $accdest = $results[0]['account_number'];
         $accsrcID = toAccId($accsrc);
         $accdestID = toAccId($accdest);

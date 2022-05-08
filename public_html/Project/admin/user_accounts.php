@@ -11,25 +11,6 @@ $_SESSION['account'] = $_GET['account'];
 ?>
 
 <?php
-    if(isset($_POST['acc'])){
-        $acc = $_POST['acc'];
-        if(ctype_digit($acc) == True){
-            $db = getDB();
-
-            $fres = [];
-            $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number = $acc LIMIT 1");
-            $stmt->execute();
-            $fres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $frozenval = $fres[0]['frozen'];
-
-            $stmt = $db->prepare("UPDATE Accounts SET Frozen = !$frozenval WHERE account_number = $acc");
-            $stmt->execute();
-            flash("Account Freeze Toggled!", "Success");
-        }
-    }
-?>
-
-<?php
  $db = getDB();
  $results = [];
  $uid = $_SESSION['account'];
@@ -49,6 +30,7 @@ $_SESSION['account'] = $_GET['account'];
         <th>Balance</th>
         <th>APY</th>
         <th>Frozen</th>
+        <th>Toggle Freeze</th>
     </thead>
     <tbody>
         <?php if (empty($results)) : ?>
@@ -100,19 +82,12 @@ $_SESSION['account'] = $_GET['account'];
                             }
                         ?>
                     </td>
+                    <td><a href="<?php echo get_url('admin/freeze_account.php'); ?>?account=<?php se($item, "account_number");?>&page=2">Toggle Freeze</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
     </tbody>
 </table>
-
-<h3>Toggle Freeze:</h3>
-<form method="POST">
-    <label for="acc">Account:</label>
-    <input type="number" id="acc" name="acc">
-
-    <input type="submit" value="Toggle" />
-</form>
 
 <?php
 //note we need to go up 1 more directory

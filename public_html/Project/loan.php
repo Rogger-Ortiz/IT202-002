@@ -198,8 +198,8 @@ if(isset($_POST['submit']) && !$hasError){
     $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($uAccID, $worldacc, $bal, 'Deposit', 'Loan Taken', $bal)");
 
     # Plus balace for destination account
-    $stmt4 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($uAccID, $destID, ($bal*-1), 'Deposit', 'Loan Deposited', $bal)");
-    $stmt5 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($destID, $uAccID, $bal, 'Deposit', 'Loan Deposited', $newbal)");
+    $stmt4 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($worldacc, $destID, ($bal*-1), 'Deposit', 'Loan Deposited', $bal)");
+    $stmt5 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($destID, $worldacc, $bal, 'Deposit', 'Loan Deposited', $newbal)");
 
     try {
         $stmt2->execute();
@@ -303,6 +303,8 @@ if(isset($_POST["submit2"])){
   $balstmt->execute();
   $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance-$transamt) WHERE account_number=$accsrc");
   $balstmt->execute();
+  $balstmt = $db->prepare("UPDATE Accounts SET balance=(balance+$transamt) WHERE user_id=-1");
+  $balstmt->execute();
 
   $results = [];
   $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number=$accsrc LIMIT 1");
@@ -333,11 +335,32 @@ if(isset($_POST["submit2"])){
     }
   $dbal = $results[0]['balance'];
   $dbal = (int)$dbal;
+
+  $wacc = 1;
+  $results = [];
+  $stmt = $db->prepare("SELECT balance FROM Accounts WHERE account_number='000000000000' LIMIT 1");
+    try {
+        $stmt->execute();
+        $r = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        if ($r) {
+            $results = $r;
+        }
+    } catch (PDOException $e) {
+        error_log(var_export($e, true));
+        flash("Error fetching items", "danger");
+    }
+  $wbal = $results[0]['balance'];
+  $wbal = (int)$wbal;
   
   try{
-    $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accsrcID, $accdestID, ($transamt*-1), 'Transfer', '$memo', $sbal)");
+    $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accsrcID, $accdestID, ($transamt*-1), 'Loan Payment', '$memo', $sbal)");
     $trstmt->execute();
-    $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accdestID, $accsrcID, $transamt, 'Transfer', '$memo', $dbal)");
+    $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accdestID, $accsrcID, $transamt, 'Loan Payment', '$memo', $dbal)");
+    $trstmt->execute();
+
+    $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($accsrcID, $wacc, ($transamt*-1), 'Loan Payment', '$memo', $sbal)");
+    $trstmt->execute();
+    $trstmt = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, memo, expected_total) VALUES($wacc, $accsrcID, $transamt, 'Loan Payment', '$memo', $wbal)");
     $trstmt->execute();
     flash("Payment Success!", "Success");
   }catch (PDOException $e) {

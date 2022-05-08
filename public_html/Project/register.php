@@ -84,11 +84,13 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm
         $hash = password_hash($password, PASSWORD_BCRYPT);
         $db = getDB();
         $vis = False;
-        $stmt = $db->prepare("INSERT INTO Users (email, password, username, public) VALUES(:email, :password, :username, $vis)");
+        $isdis = False;
+        $stmt = $db->prepare("INSERT INTO Users(email, password, username) VALUES('$email', '$hash', '$username')");
         try {
-            $stmt->execute([":email" => $email, ":password" => $hash, ":username" => $username]);
+            $stmt->execute();
             flash("Successfully registered!", "success");
         } catch (Exception $e) {
+            print($e);
             users_check_duplicate($e->errorInfo);
         }
     }

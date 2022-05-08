@@ -7,7 +7,7 @@ if (!has_role("Admin")) {
     die(header("Location: " . get_url("home.php")));
 }
 ?>
-<h1>Search Users</h1>
+<h1>Search Accounts</h1>
 <?php
  $db = getDB();
  $query = "SELECT id, account_number, user_id, frozen FROM Accounts WHERE id != 1";
@@ -63,7 +63,7 @@ if (!has_role("Admin")) {
                             }
                         ?>
                     </td>
-                    <td><a href="<?php echo get_url('admin/freeze_account.php'); ?>?account=<?php se($item, "account_number");?>">Toggle Freeze</a></td>
+                    <td><a href="<?php echo get_url('admin/freeze_account.php'); ?>?account=<?php se($item, "account_number");?>&page=1">Toggle Freeze</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>

@@ -117,8 +117,36 @@
     -  Link to related feature: [Ext-Transfer Page](https://ro77-prod.herokuapp.com/Project/telle.php)
 
 - Milestone 4
-  - (duplicate template here for Milestone 1 features)
-  - 
+  - [x] \(05/06/2022 of completion) User can set their profile to private/public
+    -  Link to related .md file: [Milestone4](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone4.md)
+    -  Link to related pull : [Profile Vis](https://github.com/Rogger-Ortiz/IT202-002/pull/95)
+    -  Link to related feature: [Profile](https://ro77-dev.herokuapp.com/Project/profile.php)
+
+  - [x] \(05/06/2022 of completion) User will be able to open a savings account
+    -  Link to related .md file: [Milestone4](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone4.md)
+    -  Link to related pull : [Savings Account](https://github.com/Rogger-Ortiz/IT202-002/pull/95)
+    -  Link to related feature: [Savings](https://ro77-dev.herokuapp.com/Project/createaccount.php)
+
+  - [x] \(05/07/2022 of completion) User will be able to take out a loan
+    -  Link to related .md file: [Milestone4](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone4.md)
+    -  Link to related pull : [Loan](https://github.com/Rogger-Ortiz/IT202-002/pull/97)
+    -  Link to related feature: [Loans](https://ro77-dev.herokuapp.com/Project/loan.php)
+
+  - [x] \(05/07/2022 of completion) Listing accounts should show APY
+    -  Link to related .md file: [Milestone4](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone4.md)
+    -  Link to related pull : [APY](https://github.com/Rogger-Ortiz/IT202-002/pull/96)
+    -  Link to related feature: [Show APY](https://ro77-dev.herokuapp.com/Project/accounts.php)
+
+  - [x] \(05/07/2022 of completion) User will be able to close account
+    -  Link to related .md file: [Milestone4](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone4.md)
+    -  Link to related pull : [Close Acct](https://github.com/Rogger-Ortiz/IT202-002/pull/99)
+    -  Link to related feature: [Accounts (click to close)](https://ro77-dev.herokuapp.com/Project/accounts.php)
+
+  - [x] \(05/08/2022 of completion) Admin Role
+    -  Link to related .md file: [Milestone4](https://github.com/Rogger-Ortiz/IT202-002/blob/prod/public_html/Project/milestone4.md)
+    -  Link to related pull : [Search User/Acct](https://github.com/Rogger-Ortiz/IT202-002/pull/99)
+    -  Link to related feature: [Search User](https://ro77-dev.herokuapp.com/Project/admin/search_users.php)
+    -  Link to related feature: [Search Acct](https://ro77-dev.herokuapp.com/Project/admin/search_accounts.php)
 ### Intructions
 #### Don't delete this
 1. Pick one project type
