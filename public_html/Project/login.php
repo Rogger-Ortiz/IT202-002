@@ -68,12 +68,14 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
         //flash("Welcome, $email");
         //TODO 4
         $db = getDB();
-        $stmt = $db->prepare("SELECT id, email, username, password from Users 
+        $stmt = $db->prepare("SELECT id, email, username, is_disabled password from Users 
         where email = :email or username = :email");
         try {
             $r = $stmt->execute([":email" => $email]);
             if ($r) {
                 $user = $stmt->fetch(PDO::FETCH_ASSOC);
+                $disabled = $user['is_disabled'];
+                if(!$disabled){
                 if ($user) {
                     $hash = $user["password"];
                     unset($user["password"]);
@@ -106,6 +108,9 @@ if (isset($_POST["email"]) && isset($_POST["password"])) {
                     }
                 } else {
                     flash("Email not found");
+                }
+                }else{
+                    flash("Sorry, your account is disabled at this time", "warning");
                 }
             }
         } catch (Exception $e) {
