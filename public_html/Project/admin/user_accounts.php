@@ -106,9 +106,9 @@ $_SESSION['account'] = $_GET['account'];
             $stmt->execute();
             $fres = $stmt->fetchAll(PDO::FETCH_ASSOC);
             $frozenval = $fres[0]['frozen'];
-            echo $frozenval;
+            $inval = ($frozenval*-1)+1;
 
-            $stmt = $db->prepare("UPDATE Accounts SET Frozen = !$frozenval");
+            $stmt = $db->prepare("UPDATE Accounts SET Frozen = $inval");
             flash("Account Freeze Toggled!", "Success");
         }
     }
