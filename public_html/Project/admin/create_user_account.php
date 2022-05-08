@@ -36,6 +36,7 @@ if (is_logged_in(true)) {
 <h3>Open Account</h3>
 
 <?php
+$db = getDB();
 $uid = $_SESSION['account'];
 $results = [];
 $stmt = $db->prepare("SELECT id, account_number, account_type, modified FROM Accounts WHERE user_id = $uid");
