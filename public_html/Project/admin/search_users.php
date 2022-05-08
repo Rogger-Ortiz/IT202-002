@@ -9,7 +9,7 @@ if (!has_role("Admin")) {
 ?>
 
 <?php
-
+ $db = getDB();
  $stmt = $db->prepare("SELECT first_name, last_name FROM Users");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
