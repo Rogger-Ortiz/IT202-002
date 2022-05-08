@@ -62,7 +62,7 @@ $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <td><a href="<?php echo get_url('details.php'); ?>?account=<?php se($item, "id");?>&page=1"><?php se($item, "account_number"); ?></a></td>
                     <td><?php se($item, "account_type") ?></td>
                     <td><?php se($item, "modified") ?></td>
-                    <td><a href="<?php echo get_url('admin/open_account.php'); ?>?account=<?php se($item, "id");?>">Toggle Deactivate</a></td>
+                    <td><a href="<?php echo get_url('admin/open_account.php'); ?>?account=<?php se($item, "id");?>">Open Account</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
