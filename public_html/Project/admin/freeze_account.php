@@ -31,8 +31,15 @@ if($page == 1){
     die(header("Location: search_accounts.php"));
 }
 if($page == 2){
-    
-$accid = toAccId($acc);
-die(header("Location: user_accounts.php?account=" . $accid));
+    $db = getDB();
+    $results = [];
+    $stmt = $db->prepare("SELECT user_id from Accounts WHERE account_number=$acc Limit 1");
+    $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    if ($l) {
+     $results = $l;
+    }
+
+    $accid = $results[0]['user_id'];
+    die(header("Location: user_accounts.php?account=" . $accid));
 }
 ?>
