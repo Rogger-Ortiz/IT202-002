@@ -31,9 +31,9 @@ if (!has_role("Admin")) {
  $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id != 1";
 
  if(isset($_POST['submit'])){
-    $numval = $_POST['number'];
+    $numval = $_POST['num'];
     $numval = strval($numval);
-    if(ctype_digit($numval) == True){
+    if(ctype_digit($numval)){
         $query .= " AND account_number LIKE '%$numval%'";
     }else{
         flash("Please only use digits in account number", "warning");
