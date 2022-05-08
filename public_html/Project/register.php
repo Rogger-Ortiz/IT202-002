@@ -85,9 +85,9 @@ if (isset($_POST["email"]) && isset($_POST["password"]) && isset($_POST["confirm
         $db = getDB();
         $vis = False;
         $isdis = False;
-        $stmt = $db->prepare("INSERT INTO Users (email, password, username, public, is_disabled) VALUES(:email, :password, :username, $vis, $isdis)");
+        $stmt = $db->prepare("INSERT INTO Users (email, password, username, public, is_disabled) VALUES($email, $hash, $username, $vis, $isdis)");
         try {
-            $stmt->execute([":email" => $email, ":password" => $hash, ":username" => $username]);
+            $stmt->execute();
             flash("Successfully registered!", "success");
         } catch (Exception $e) {
             print($e);
