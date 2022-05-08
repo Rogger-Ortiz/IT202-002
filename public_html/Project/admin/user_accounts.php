@@ -22,6 +22,25 @@ $_SESSION['account'] = $_GET['account'];
  }
 ?>
 
+<?php
+    if(isset($_POST['acc'])){
+        $acc = $_POST['acc'];
+        if(ctype_digit($acc) == True){
+            $db = getDB();
+
+            $fres = [];
+            $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number = $acc LIMIT 1");
+            $stmt->execute();
+            $fres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $frozenval = $fres[0]['frozen'];
+
+            $stmt = $db->prepare("UPDATE Accounts SET Frozen = !$frozenval WHERE account_number = $acc");
+            $stmt->execute();
+            flash("Account Freeze Toggled!", "Success");
+        }
+    }
+?>
+
 <table>
     <thead>
         <th>Account Number</th>
@@ -94,25 +113,6 @@ $_SESSION['account'] = $_GET['account'];
 
     <input type="submit" value="Toggle" />
 </form>
-
-<?php
-    if(isset($_POST['acc'])){
-        $acc = $_POST['acc'];
-        if(ctype_digit($acc) == True){
-            $db = getDB();
-
-            $fres = [];
-            $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number = $acc LIMIT 1");
-            $stmt->execute();
-            $fres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $frozenval = $fres[0]['frozen'];
-
-            $stmt = $db->prepare("UPDATE Accounts SET Frozen = !$frozenval WHERE account_number = $acc");
-            $stmt->execute();
-            flash("Account Freeze Toggled!", "Success");
-        }
-    }
-?>
 
 <?php
 //note we need to go up 1 more directory
