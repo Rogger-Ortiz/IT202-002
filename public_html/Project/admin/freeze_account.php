@@ -11,17 +11,16 @@ $_SESSION['account'] = $_GET['account'];
 ?>
 
 <?php
-$uid = $_SESSION['account'];
+$acc = $_SESSION['account'];
 $db = getDB();
-$accnum = toAccnum($uid);
 
 $results = [];
-$stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number = $accnum LIMIT 1");
+$stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number = $acc LIMIT 1");
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $disval = $results[0]['frozen'];
 
-$stmt = $db->prepare("UPDATE Accounts SET frozen = !$disval WHERE account_number = $accnum");
+$stmt = $db->prepare("UPDATE Accounts SET frozen = !$disval WHERE account_number = $acc");
 $stmt->execute();
 flash("Account Freeze Toggled!", "Success");
 

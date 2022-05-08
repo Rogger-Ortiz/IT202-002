@@ -15,7 +15,7 @@ if (!has_role("Admin")) {
  if(isset($_POST['acc'])){
     $acc = $_POST['acc'];
     if(ctype_digit($acc) == True){
-        $query .= " AND account_number LIKE '$acc'";
+        $query .= " AND account_number LIKE '%$acc%'";
     }
  }
 
@@ -63,7 +63,7 @@ if (!has_role("Admin")) {
                             }
                         ?>
                     </td>
-                    <td><a href="<?php echo get_url('admin/freeze_account.php'); ?>?account=<?php se($item, "user_id");?>">Toggle Freeze</a></td>
+                    <td><a href="<?php echo get_url('admin/freeze_account.php'); ?>?account=<?php se($item, "account_number");?>">Toggle Freeze</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
