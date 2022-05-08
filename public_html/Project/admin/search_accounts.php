@@ -28,7 +28,17 @@ if (!has_role("Admin")) {
  $results = [];
  $hasError = false;
 
- $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id > 0";
+ $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id != 1"; 
+
+ $query .= " ORDER BY modified desc LIMIT 10";
+ $stmt = $db->prepare($query);
+ if(!$hasError){
+     $stmt->execute();
+     $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
+     if ($l) {
+        $results = $l;
+    }
+ }
 
  if(isset($_POST['submit2'])){
     $numval = $_POST['num2'];
@@ -45,11 +55,11 @@ if (!has_role("Admin")) {
         $frozen = $res[0]['frozen'];
 
         if($frozen == True){
-         $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$accnum");
+         $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$numval");
          $stmt->execute();
          flash("Account frozen!", "Success");
         }elseif($frozen == False){
-            $stmt = $db->prepare("UPDATE Accounts SET frozen=True WHERE account_number=$accnum");
+            $stmt = $db->prepare("UPDATE Accounts SET frozen=True WHERE account_number=$numval");
             $stmt->execute();
             flash("Account unfrozen!", "Success");
         }else{
@@ -57,16 +67,6 @@ if (!has_role("Admin")) {
         }
     }
 }
-
- $query .= " ORDER BY modified desc LIMIT 10";
- $stmt = $db->prepare($query);
- if(!$hasError){
-     $stmt->execute();
-     $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
-     if ($l) {
-        $results = $l;
-    }
- }
  
 ?>
 
