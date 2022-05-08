@@ -63,7 +63,7 @@ if (!has_role("Admin")) {
                             }
                         ?>
                     </td>
-                    <td><a href="<?php echo get_url('admin/freeze_account.php'); ?>?account=<?php se($item, "account_number");?>?page=1">Toggle Freeze</a></td>
+                    <td><a href="<?php echo get_url('admin/freeze_account.php'); ?>?account=<?php se($item, "account_number");?>&page=1">Toggle Freeze</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
