@@ -13,5 +13,10 @@ function users_check_duplicate($errorInfo)
             //this will log the output to the terminal/console that's running the php server
             error_log(var_export($errorInfo, true));
         }
+    } else {
+        //TODO come up with a nice error message
+        flash("An unhandled error occurs", "danger");
+        //this will log the output to the terminal/console that's running the php server
+        var_export($errorInfo, true);
     }
 }
