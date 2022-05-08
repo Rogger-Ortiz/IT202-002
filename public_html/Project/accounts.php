@@ -15,7 +15,7 @@ $var = "hi";
  $db = getDB();
  $results = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE user_id = $uid AND is_active = 1 ORDER BY modified desc LIMIT 10");
+ $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance, frozen FROM Accounts WHERE user_id = $uid AND is_active = 1 ORDER BY modified desc LIMIT 10");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -30,6 +30,7 @@ $var = "hi";
         <th>Modified</th>
         <th>Balance</th>
         <th>APY</th>
+        <th>Frozen</th>
     </thead>
     <tbody>
         <?php if (empty($results)) : ?>
@@ -67,6 +68,17 @@ $var = "hi";
                                 }
                             }else{
                                 echo "-";
+                            }
+                        ?>
+                    </td>
+                    <td>
+                        <?php
+                            $isdis = $item["frozen"];
+                            if($isdis == True){
+                                echo "Yes";
+                            }
+                            if($isdis == False){
+                                echo "No";
                             }
                         ?>
                     </td>
