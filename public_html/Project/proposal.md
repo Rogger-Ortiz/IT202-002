@@ -15,7 +15,6 @@
  
  
 ### Proposal Checklist and Evidence
-- Link to related video: [Video](https://youtu.be/nJbjyPLO5YA)
 
 - Milestone 1
   - [x] \(02/21/2022 of completion) User will be able to register a new account
