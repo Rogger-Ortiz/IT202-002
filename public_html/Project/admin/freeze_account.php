@@ -18,7 +18,8 @@ $results = [];
 $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE id = $uid LIMIT 1");
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
-$disval = $results['frozen'];
+print_r($results);
+$disval = $results[0]['frozen'];
 
 $stmt = $db->prepare("UPDATE Accounts SET frozen = !$disval WHERE id = $uid");
 $stmt->execute();
