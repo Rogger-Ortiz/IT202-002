@@ -10,7 +10,7 @@ if (!has_role("Admin")) {
 <h1>Search Users</h1>
 <?php
  $db = getDB();
- $query = "SELECT account_number, user_id, frozen FROM Accounts WHERE id != 1";
+ $query = "SELECT id, account_number, user_id, frozen FROM Accounts WHERE id != 1";
 
  if(isset($_POST['acc'])){
     $acc = $_POST['acc'];
@@ -51,7 +51,7 @@ if (!has_role("Admin")) {
         <?php else : ?>
             <?php foreach ($results as $item) : ?>
                 <tr>
-                    <td><a href="<?php echo get_url('details.php'); ?>?account=<?php se($item, "user_id");?>&page=1"><?php se($item, "account_number"); ?></a></td>
+                    <td><a href="<?php echo get_url('details.php'); ?>?account=<?php se($item, "id");?>&page=1"><?php se($item, "account_number"); ?></a></td>
                     <td>
                         <?php
                             $isdis = $item["frozen"];
