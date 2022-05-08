@@ -7,10 +7,26 @@ if (!has_role("Admin")) {
     die(header("Location: " . get_url("home.php")));
 }
 ?>
-
+<h1>Search Users</h1>
 <?php
  $db = getDB();
- $stmt = $db->prepare("SELECT id, first_name, last_name FROM Users WHERE id != -1");
+ $query = "SELECT id, first_name, last_name FROM Users WHERE id != -1";
+
+ if(isset($_POST['fname'])){
+    $fname = $_POST['fname'];
+    if(ctype_alpha($fname)){
+        $query .= " AND first_name = $fname";
+    }
+ }
+
+ if(isset($_POST['lname'])){
+    $lname = $_POST['lname'];
+    if(ctype_alpha($lname)){
+        $query .= " AND last_name = $lname";
+    }
+ }
+ 
+ $stmt = $db->prepare($query);
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -20,6 +36,7 @@ if (!has_role("Admin")) {
  }
 ?>
 
+<h3>Search by name:</h3>
 <form method="POST">
     <label for="fname">First Name:</label>
     <input type="text" id="fname" name="fname">
