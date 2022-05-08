@@ -32,7 +32,7 @@ if($page == 1){
 }
 if($page == 2){
     
-
-die(header("Location: user_accounts.php?account=" . $acc));
+$accid = toAccId($acc);
+die(header("Location: user_accounts.php?account=" . $accid));
 }
 ?>
