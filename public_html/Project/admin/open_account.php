@@ -15,12 +15,12 @@ $acc = $_SESSION['account'];
 $db = getDB();
 
 $results = [];
-$stmt = $db->prepare("SELECT is_active FROM Accounts WHERE account_number = $acc LIMIT 1");
+$stmt = $db->prepare("SELECT is_active FROM Accounts WHERE $id = $acc LIMIT 1");
 $stmt->execute();
 $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
 $disval = $results[0]['is_active'];
 
-$stmt = $db->prepare("UPDATE Accounts SET is_active = !$disval WHERE account_number = $acc");
+$stmt = $db->prepare("UPDATE Accounts SET is_active = !$disval WHERE $id = $acc");
 $stmt->execute();
 flash("Account Opened!", "Success");
 
