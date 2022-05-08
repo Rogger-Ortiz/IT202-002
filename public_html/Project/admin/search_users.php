@@ -53,7 +53,7 @@ if (!has_role("Admin")) {
         <th>Last Name</th>
         <th>View Accounts</th>
         <th>Create/Open Account</th>
-        <th>User Disabled<th>
+        <th>User Disabled</th>
         <th>Deactivate User</th>
     </thead>
     <tbody>
