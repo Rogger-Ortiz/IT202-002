@@ -65,7 +65,7 @@ if (!has_role("Admin")) {
                 <tr>
                     <td><?php se($item, "first_name") ?></td>
                     <td><?php se($item, "last_name") ?></td>
-                    <td></td>
+                    <td><a href="<?php echo get_url('user_accounts.php'); ?>?account=<?php se($item, "id");?>&page=1">View Accounts</a></td>
                     <td></td>
                     <td></td>
                 </tr>
