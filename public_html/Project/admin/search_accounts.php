@@ -51,11 +51,11 @@ if (!has_role("Admin")) {
         if($frozen == True){
          $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$accnum");
          $stmt->execute();
-         flash("Account frozen!", "Success");
+         flash("Account unfrozen!", "Success");
         }elseif($frozen == False){
             $stmt = $db->prepare("UPDATE Accounts SET frozen=True WHERE account_number=$accnum");
             $stmt->execute();
-            flash("Account unfrozen!", "Success");
+            flash("Account frozen!", "Success");
         }else{
             flash("Something went wrong", "warning");
         }
