@@ -17,21 +17,48 @@ if (!has_role("Admin")) {
     <input type="submit" name="submit" value="Filter" />
 </form>
 
+<form method="POST">
+<label for="num2">Account To Freeze/Unfreeze:</label>
+    <input type="num2" id="num2" name="num2"><br>
+    <input type="submit" name="submit2" value="Toggle" />
+</form>
+
 <?php
  $db = getDB();
  $results = [];
  $hasError = false;
 
- $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id != -1";
+ $query = "SELECT id, account_number, account_type, modified, balance FROM Accounts WHERE is_active = 1 AND id > 0";
 
- if(isset($_POST['num'])){
-    $numval = $_POST['num'];
+ if(isset($_POST['submit2'])){
+    $numval = $_POST['num2'];
     if(ctype_digit($numval)){
         $query .= " AND account_number LIKE '%$numval%'";
     }else{
         flash("Please only use digits in account number", "warning");
     }
  }
+
+    $accnum = $item['account_number'];
+    $res = [];
+    if(isset($_POST['submit2'])){
+        $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number=$accnum LIMIT 1");
+        $stmt->execute();
+        $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $frozen = $res[0]['frozen'];
+
+        if($frozen == True){
+         $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$accnum");
+         $stmt->execute();
+         flash("Account frozen!", "Success");
+        }elseif($frozen == False){
+            $stmt = $db->prepare("UPDATE Accounts SET frozen=True WHERE account_number=$accnum");
+            $stmt->execute();
+            flash("Account unfrozen!", "Success");
+        }else{
+            flash("Something went wrong", "warning");
+        }
+    }
 
  $query .= " ORDER BY modified desc LIMIT 10";
  $stmt = $db->prepare($query);
@@ -52,7 +79,6 @@ if (!has_role("Admin")) {
         <th>Modified</th>
         <th>Balance</th>
         <th>APY</th>
-        <th>Toggle Freeze</th>
     </thead>
     <tbody>
         <?php if (empty($results)) : ?>
@@ -92,36 +118,6 @@ if (!has_role("Admin")) {
                                 echo "-";
                             }
                         ?>
-                    </td>
-                    <td>
-                    <form method="POST">
-                        <input type="submit" name="submit2" value="Toggle" />
-                    </form>
-
-                    <?php
-                        $accnum = $item['account_number'];
-                        $res = [];
-                        if(isset($_POST['submit2'])){
-                            $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number=$accnum LIMIT 1");
-                            $stmt->execute();
-                            $res = $stmt->fetchAll(PDO::FETCH_ASSOC);
-                        $frozen = $res[0]['frozen'];
-
-                        if($frozen == True){
-                            $stmt = $db->prepare("UPDATE Accounts SET frozen=False WHERE account_number=$accnum");
-                            $stmt->execute();
-                            flash("Account frozen!", "Success");
-                        }elseif($frozen == False){
-                            $stmt = $db->prepare("UPDATE Accounts SET frozen=True WHERE account_number=$accnum");
-                            $stmt->execute();
-                            flash("Account unfrozen!", "Success");
-                        }else{
-                            flash("Something went wrong", "warning");
-                        }
-                    }
-
-                    ?>
-
                     </td>
                 </tr>
             <?php endforeach; ?>
