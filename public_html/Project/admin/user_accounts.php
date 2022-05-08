@@ -1,20 +1,38 @@
 <?php
-require(__DIR__ . "/../../partials/nav.php");
+//note we need to go up 1 more directory
+require(__DIR__ . "/../../../partials/nav.php");
+
+if (!has_role("Admin")) {
+    flash("You don't have permission to view this page", "warning");
+    die(header("Location: " . get_url("home.php")));
+    
+}
+$_SESSION['account'] = $_GET['account'];
 ?>
-<h1>Accounts</h1>
 
 <?php
-if (is_logged_in(true)) {
-    //comment this out if you don't want to see the session variables
-    error_log("Session data: " . var_export($_SESSION, true));
-}
-$var = "hi";
+    if(isset($_POST['acc'])){
+        $acc = $_POST['acc'];
+        if(ctype_digit($acc) == True){
+            $db = getDB();
+
+            $fres = [];
+            $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number = $acc LIMIT 1");
+            $stmt->execute();
+            $fres = $stmt->fetchAll(PDO::FETCH_ASSOC);
+            $frozenval = $fres[0]['frozen'];
+
+            $stmt = $db->prepare("UPDATE Accounts SET Frozen = !$frozenval WHERE account_number = $acc");
+            $stmt->execute();
+            flash("Account Freeze Toggled!", "Success");
+        }
+    }
 ?>
 
 <?php
  $db = getDB();
  $results = [];
- $uid = get_user_id();
+ $uid = $_SESSION['account'];
  $stmt = $db->prepare("SELECT id, account_number, account_type, modified, balance, frozen FROM Accounts WHERE user_id = $uid AND is_active = 1 ORDER BY modified desc LIMIT 10");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
@@ -73,11 +91,11 @@ $var = "hi";
                     </td>
                     <td>
                         <?php
-                            $isdis = $item["frozen"];
-                            if($isdis == True){
+                            $frozen = $item["frozen"];
+                            if($frozen == True){
                                 echo "Yes";
                             }
-                            if($isdis == False){
+                            if($frozen == False){
                                 echo "No";
                             }
                         ?>
@@ -88,6 +106,15 @@ $var = "hi";
     </tbody>
 </table>
 
+<h3>Toggle Freeze:</h3>
+<form method="POST">
+    <label for="acc">Account:</label>
+    <input type="number" id="acc" name="acc">
+
+    <input type="submit" value="Toggle" />
+</form>
+
 <?php
-require(__DIR__ . "/../../partials/flash.php");
+//note we need to go up 1 more directory
+require_once(__DIR__ . "/../../../partials/flash.php");
 ?>

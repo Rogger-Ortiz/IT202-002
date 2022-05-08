@@ -203,14 +203,14 @@ $curpage = $_GET['page'];
     if($curpage==1){
         $leftbound = "";
     }else{
-        $leftbound = get_url('transactions.php') . "?account=" . $accnum . "&page=" . ($curpage-1);
+        $leftbound = get_url('details.php') . "?account=" . $accnum . "&page=" . ($curpage-1);
     }
 
     $rightbound;
     if($curpage==$totalpages){
         $rightbound = "";
     }else {
-        $rightbound = get_url('transactions.php') . "?account=" . $accnum . "&page=" . ($curpage+1);
+        $rightbound = get_url('details.php') . "?account=" . $accnum . "&page=" . ($curpage+1);
     }
 ?>
 
@@ -220,7 +220,7 @@ $curpage = $_GET['page'];
         <?php
             for($x = 0; $x<$totalpages; $x++):
         ?>
-        <li><a href="<?php echo get_url('transactions.php'); ?>?account=<?php echo $accnum;?>&page=<?php echo ($x+1); ?>">Page <?php echo ($x+1); ?></a></li>
+        <li><a href="<?php echo get_url('details.php'); ?>?account=<?php echo $accnum;?>&page=<?php echo ($x+1); ?>">Page <?php echo ($x+1); ?></a></li>
         <?php
             endfor;
         ?>

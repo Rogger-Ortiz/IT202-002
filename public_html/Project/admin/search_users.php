@@ -5,66 +5,87 @@ require(__DIR__ . "/../../../partials/nav.php");
 if (!has_role("Admin")) {
     flash("You don't have permission to view this page", "warning");
     die(header("Location: " . get_url("home.php")));
-    $db = getDB();
 }
 ?>
+<h1>Search Users</h1>
+<?php
+ $db = getDB();
+ $query = "SELECT id, first_name, last_name, is_disabled FROM Users WHERE id != -1";
 
-<h3>Filter:</h3>
+ if(isset($_POST['fname'])){
+    $fname = $_POST['fname'];
+    if(ctype_alpha($fname)){
+        $query .= " AND first_name = '$fname'";
+    }
+ }
+
+ if(isset($_POST['lname'])){
+    $lname = $_POST['lname'];
+    if(ctype_alpha($lname)){
+        $query .= " AND last_name = '$lname'";
+    }
+ }
+ 
+ $stmt = $db->prepare($query);
+ $stmt->execute();
+ $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
+ if ($l) {
+     $results = $l;
+ }else{
+     flash("No accounts found", "warning");
+ }
+?>
+
+<h3>Search by name:</h3>
 <form method="POST">
     <label for="fname">First Name:</label>
-    <input type="text" id="fname" name="fname"><br>
+    <input type="text" id="fname" name="fname">
 
     <label for="lname">Last Name:</label>
     <input type="text" id="lname" name="lname"><br>
 
-    <label for="num">Account Number:</label>
-    <input type="number" id="num" name="num"><br>
-
     <input type="submit" value="Filter" />
 </form>
 
-
-<h1>List Users</h1>
-<form method="POST">
-    <input type="search" name="role" placeholder="Role Filter" />
-    <input type="submit" value="Search" />
-</form>
 <table>
     <thead>
-        <th>ID</th>
-        <th>Email</th>
-        <th>Created</th>
-        <th>Username</th>
         <th>First Name</th>
         <th>Last Name</th>
+        <th>View Accounts</th>
+        <th>Create/Open Account</th>
+        <th>User Disabled</th>
+        <th>Deactivate User</th>
     </thead>
     <tbody>
-        <?php if (empty($roles)) : ?>
+        <?php if (empty($results)) : ?>
             <tr>
-                <td colspan="100%">No roles</td>
+                <td colspan="100%">No Users</td>
             </tr>
         <?php else : ?>
-            <?php foreach ($roles as $role) : ?>
+            <?php foreach ($results as $item) : ?>
                 <tr>
-                    <td><?php se($role, "id"); ?></td>
-                    <td><?php se($role, "name"); ?></td>
-                    <td><?php se($role, "description"); ?></td>
-                    <td><?php echo (se($role, "is_active", 0, false) ? "active" : "disabled"); ?></td>
+                    <td><?php se($item, "first_name") ?></td>
+                    <td><?php se($item, "last_name") ?></td>
+                    <td><a href="<?php echo get_url('admin/user_accounts.php'); ?>?account=<?php se($item, "id");?>&page=1">Accounts</a></td>
+                    <td><a href="<?php echo get_url('admin/create_user_account.php'); ?>?account=<?php se($item, "id");?>&page=1">Create/Open</a></td>
                     <td>
-                        <form method="POST">
-                            <input type="hidden" name="role_id" value="<?php se($role, 'id'); ?>" />
-                            <?php if (isset($search) && !empty($search)) : ?>
-                                <?php /* if this is part of a search, lets persist the search criteria so it reloads correctly*/ ?>
-                                <input type="hidden" name="role" value="<?php se($search, null); ?>" />
-                            <?php endif; ?>
-                            <input type="submit" value="Toggle" />
-                        </form>
+                        <?php
+                            $isdis = $item["is_disabled"];
+                            if($isdis == True){
+                                echo "Yes";
+                            }
+                            if($isdis == False){
+                                echo "No";
+                            }
+                        ?>
                     </td>
+                    <td><a href="<?php echo get_url('admin/deactivate_user.php'); ?>?account=<?php se($item, "id");?>">Toggle Deactivate</a></td>
                 </tr>
             <?php endforeach; ?>
         <?php endif; ?>
     </tbody>
 </table>
+
 <?php
 //note we need to go up 1 more directory
 require_once(__DIR__ . "/../../../partials/flash.php");

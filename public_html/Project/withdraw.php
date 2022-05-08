@@ -15,7 +15,7 @@ $db = getDB();
 
 $results = [];
  $uid = get_user_id();
- $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id = $uid AND account_type != 'Loan'");
+ $stmt = $db->prepare("SELECT account_number FROM Accounts WHERE user_id = $uid AND account_type != 'Loan' AND frozen = False");
  $stmt->execute();
  $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
  if ($l) {
@@ -179,8 +179,8 @@ if((isset($_POST['account']) && $_POST['account'] != "Account") && !$hasError){
     $Ubal = strval($Ubal);
 
  // Insert Transactions into Transactions table
- $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, ($balchange*-1), 'Withdraw', $wbal, '$memo')");
- $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, $balchange, 'Withdraw', $Ubal, '$memo')");
+ $stmt2 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($accountsrc, $accountdest, $balchange, 'Withdraw', $wbal, '$memo')");
+ $stmt3 = $db->prepare("INSERT INTO Transactions(account_src, account_dest, balance_change, transaction_type, expected_total, memo) VALUES($Uaccountsrc, $Uaccountdest, ($balchange*-1), 'Withdraw', $Ubal, '$memo')");
 
  // Execute statements, flash success
  try {

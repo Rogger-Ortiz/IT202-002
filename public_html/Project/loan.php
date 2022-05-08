@@ -92,12 +92,12 @@ $hasError = false;
 
 if(isset($_POST['submit'])){
     if(isset($_POST["loan"]) && $_POST["loan"] < 500){
-        flash("Loan amount must be more than $500", "warning");
+        flash("Loan amount must be $500 or more.", "warning");
         $hasError = true;
     }
     
     if(isset($_POST["account"]) && $_POST['account'] == "Account"){
-        flash("Please select an account to deposit to", "warning");
+        flash("Please select an account to deposit to.", "warning");
         $hasError = true;
     }    
 }
