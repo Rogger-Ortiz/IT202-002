@@ -33,13 +33,12 @@ if($page == 1){
 if($page == 2){
     $db = getDB();
     $results = [];
-    $stmt = $db->prepare("SELECT user_id from Accounts WHERE account_number=$acc Limit 1");
-    $l = $stmt->fetchAll(PDO::FETCH_ASSOC);
-    if ($l) {
-     $results = $l;
-    }
-
+    $stmt = $db->prepare("SELECT user_id FROM Accounts WHERE account_number = $acc LIMIT 1");
+    $stmt->execute();
+    $results = $stmt->fetchAll(PDO::FETCH_ASSOC);
     $accid = $results[0]['user_id'];
+    $accid = strval($accid);
+
     die(header("Location: user_accounts.php?account=" . $accid));
 }
 ?>
