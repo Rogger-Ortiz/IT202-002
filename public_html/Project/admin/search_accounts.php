@@ -95,7 +95,7 @@ if (!has_role("Admin")) {
                     </td>
                     <td>
                     <form method="POST">
-                        <input type="submit2" name="submit2" value="Toggle" />
+                        <input type="submit" name="submit2" value="Toggle" />
                     </form>
 
                     <?php
