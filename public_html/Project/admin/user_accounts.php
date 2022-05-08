@@ -105,7 +105,7 @@ $_SESSION['account'] = $_GET['account'];
             $stmt = $db->prepare("SELECT frozen FROM Accounts WHERE account_number = $acc LIMIT 1");
             $stmt->execute();
             $fres = $stmt->fetchAll(PDO::FETCH_ASSOC);
-            $frozenval = $stmt[0]['frozen'];
+            $frozenval = $fres[0]['frozen'];
 
             $stmt = $db->prepare("UPDATE Accounts SET Frozen = !$frozenval");
             flash("Account Freeze Toggled!", "Success");
