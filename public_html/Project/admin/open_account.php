@@ -12,7 +12,6 @@ $_SESSION['account'] = $_GET['account'];
 
 <?php
 $acc = $_SESSION['account'];
-$page = $_SESSION['page'];
 $db = getDB();
 
 $results = [];
